@@ -17,3 +17,29 @@ R2.4 Translating math expressions to Java.
 4/ c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(GAMMA))
 
 
+R2.7 Understanding integer operations, order of precedence, and integer division.
+a/ 17 / 10 + 17 % 10 = 1 + 7 = 8
+b/ 17 % 2 + 18 % 2 = 1 + 0 = 1
+c/ (17 + 18) / 2 = 17
+d/ (17 + 18) / 2.0 = 17.5
+e/ (int) (0.5 * (18 + 17)) = 17
+f/ (int) Math.round(0.5 * (18 + 17)) = 18
+
+
+R2.14 How the compiler interprets primitive values
+1/ 2 is an int
+2/ 2.0 is a double
+3/ '2' is a char
+4/ "2" is a string
+5/ "2.0" is a string
+
+
+R2.17 Pseudocode understanding
+1/ Split name into 3 string variables (firstName, middleName, and lastName) at spaces
+2/ For each variable
+3/      Print the character at index 0 after making it uppercase
+
+
+R2.22 More pseudocode - you do not need to draw a diagram for this question
+This pseudocode works. Using the day number 4, the starting position is 4 * 3 = 12.
+Index 12 is letter 'T', so extracting substring of length 3 returns "Thu" as desired.
