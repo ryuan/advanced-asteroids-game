@@ -89,6 +89,6 @@ R4.14 Calendar problem
 10/        Print string "   "
 11/     Else
 12/        If (counter + 1) % 7 == 0
-13/           Print string " " + (counter - startDay + 1) + "\n"
+13/           Print string " " + (counter - startDay + 1) + "%n"
 14/        Else
 15/           Print string " " + (counter - startDay + 1) + " "

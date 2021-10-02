@@ -21,7 +21,6 @@ public class E2_4 {
         /*
         Calculate and print out the sum, difference, product, average, distance, max, and min.
          */
-
         int sum = num1 + num2;
         System.out.println("The sum of " + num1 + " and " + num2 + " is: " + sum);
 
