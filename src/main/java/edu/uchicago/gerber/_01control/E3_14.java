@@ -11,6 +11,7 @@ public class E3_14 {
 
         /*
         Prompts user for a month (in integer form) and day
+        Implemented do/while loop to check that user inputs are meaningful
          */
         int month;
         do {
