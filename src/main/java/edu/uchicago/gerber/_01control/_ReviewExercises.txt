@@ -43,3 +43,52 @@ R2.17 Pseudocode understanding
 R2.22 More pseudocode - you do not need to draw a diagram for this question
 This pseudocode works. Using the day number 4, the starting position is 4 * 3 = 12.
 Index 12 is letter 'T', so extracting substring of length 3 returns "Thu" as desired.
+
+
+R3.19 Pseudocode for grade problem
+1/ If quiz grade is between 90-100 inclusive
+2/      Return letter grade A
+3/ Else if quiz grade is between 80-89 inclusive
+4/      Return letter grade B
+5/ Else if quiz grade is between 70-79 inclusive
+6/      Return letter grade C
+7/ Else if quiz grade is between 60-69 inclusive
+8/      Return letter grade D
+9/ Else
+10/     Return letter grade F
+
+
+R3.30 Boolean expressions
+a/ False
+b/ True
+c/ True
+d/ True
+e/ False
+f/ False
+g/ False
+h/ True
+
+
+R4.12 Implementing loops
+Java supports while, for, and the do loop statements.
+A while loop is useful for when you need to repeat code an unknown number of times until a condition is met.
+A for loop is useful for when you need to execute code a specific number of times such as defined index range or items in list/array.
+A do/while loop is useful for when you need to execute a code then check if a condition is met (such as checking user input).
+
+
+R4.14 Calendar problem
+1/ Do
+2/      Get user input between 0 and 6 representing the starting day (call it startDay)
+3/ While startDay is NOT between 0 and 6
+4/ Do
+5/      Get user input for number of days in month (call it daysMonth)
+6/ While daysMonth is NOT between 28 and 31
+7/ Print string "Su  M  T  W Th  F Sa"
+8/ For counter from 0 to daysMonth
+9/      If counter < startDay
+10/        Print string "   "
+11/     Else
+12/        If (counter + 1) % 7 == 0
+13/           Print string " " + (counter - startDay + 1) + "\n"
+14/        Else
+15/           Print string " " + (counter - startDay + 1) + " "
