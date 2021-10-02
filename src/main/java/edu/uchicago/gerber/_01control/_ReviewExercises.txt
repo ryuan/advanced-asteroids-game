@@ -12,7 +12,7 @@ R1.5 The following are all benefits to using Java over machine code:
 
 R2.4 Translating math expressions to Java.
 1/ s = s_0 + v_0 * t + (1.0/2.0) * g * Math.pow(t, 2)
-2/ fValue = pValue * Math.pow(1 + (double) intRate / 100, years)
+2/ fValue = pValue * Math.pow(1 + intRate / 100, years)
 3/ g = 4 * Math.pow(Math.PI, 2) * Math.pow(a, 3) / (Math.pow(p, 2) * (m_1 + m_2))
 4/ c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(GAMMA))
 
