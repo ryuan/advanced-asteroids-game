@@ -7,7 +7,7 @@ R1.5 Benefits of using Java over machine code (This one is already answered for 
 R2.4 Translating math expressions to Java.
 R2.7 Understanding integer operations, order of precedence, and integer division.
 R2.14 How the compiler interprets primitive values
-R2.17 Pseudocode understading
+R2.17 Pseudocode understanding
 R2.22 More pseudocode - you do not need to draw a diagram for this question
 R3.19 Pseudocode for grade problem
 R3.30 Boolean expressions
