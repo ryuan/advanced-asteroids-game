@@ -8,7 +8,6 @@ public class P3_14 {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
-
         System.out.print("Enter a year to check if it is a leap year: ");
         int yearInput = in.nextInt(); // ask user for a year to user as input
 
