@@ -2,7 +2,8 @@
 # Use this file to answer Review Exercises from the Big Java textbook
 #########################################################################
 
-R5.6 Parameters and return values.  The difference between an argument and a return value is that an argument is passed
+R5.6 Parameters and return values.
+The difference between an argument and a return value is that an argument is passed
 into a method, whereas a return value is the value returned from it.
 
 You can have n number of arguments, whereas you can only have one return value. By varying either the number and/or type of arguments,
@@ -15,6 +16,168 @@ Notice that the varargs parameter "String... strNickNames" must be listed last. 
  String[] strReturnValues = someMethod(99, "Jim", "Jamie", "James", "Jamey", "Jimmy", "Jimbo");
 
 
+R5.8 Pseudocode
+\\  Take user input as a string
+\\  Split string into an array of individual characters
+\\  Initiate new empty string variable newNumber
+\\  For each element in array
+\\      Switch statement for current element
+\\          Case "a", "b", "c": newNumber += 2
+\\          Case "d", "e", "f": newNumber += 3
+\\          ... \\ same logic for other letter and number combination in between
+\\          Case "w", "x", "y", "z": newNumber +=9
+\\      default to newNumber += current element
+\\  Return newNumber
 
 
+R5.10 Variable scope
+The main method has two local variables, i and b.
+The f() method has local variable n and parameter variable i.
+The g() method has local variable b and local loop variable n and i (accessible only within the loop).
 
+
+R5.14 Pass by value versus pass by reference
+Java is a pass-by-value language, so the parameter variables a and b
+are passed as copied values into the method. The original arguments are not changed.
+
+
+R6.3 Considering loops
+a/  25
+b/  13
+c/  12
+d/  Index 10 does not exist in the array
+e/  11
+f/  25
+g/  12
+h/  -1
+
+
+R6.10 Enhanced for-loop
+a/  for (double element : values)
+    {
+        total = total + element;
+    }
+b/  Enhanced for loops iterate using values, not index, so there is no easy way to convert this loop.
+    However, we can hack together the intended result by initiating a counter outside the loop and adding to it.
+    int counter = 0;
+    for (double element : values)
+        {
+            if (counter > 0) {
+            total = total + element;
+            }
+            counter += 1;
+        }
+c/  Same logic as above - we can't extract index in an enhanced for loop. We have to hack together a solution.
+    int counter = 0;
+    for (double element : values)
+    {
+        if (element == target) {return counter}
+        counter += 1;
+    }
+
+
+R6.23 Computing runs
+\\  Initiate a maxCount=0 variable
+\\  Initiate counter=0 variable
+\\  For each index in the array starting from the second element index
+\\      If the element value is equal to the previous index element value
+\\          counter += 1
+\\          If counter > maxCount
+\\              maxCount = counter
+\\      Else
+\\          counter = 0
+\\  Return maxCount
+
+
+R6.29 Multi-dimensional arrays
+\\  Fill all entries with 0
+    for (int i=0; i < values.length; i++)
+    {
+        for (int j=0; j < values[0].length; j++)
+        {
+            values[i][j] = 0;
+        }
+    }
+\\  Fill elements alternately with 0s and 1s in a checkerboard pattern
+    int counter = 0;
+    for (int i=0; i < values.length; i++) {
+        for (int j=0; j < values[0].length; j++) {
+            if (counter % 2 == 0) {
+                values[i][j] = 0;
+            }
+            else {
+                values[i][j] = 1;
+            }
+            counter += 1;
+        }
+    }
+\\  Fill only the elements at the top and bottom row with zeroes.
+    for (int i=0; i < values.length; i++) {
+        for (int j=0; j < values[0].length; j++) {
+            if (i == 0 || i == values.length) {
+                values[i][j] = 0;
+            }
+            else {
+                values[i][j] = 1;
+            }
+        }
+    }
+\\  Compute the sum of all elements.
+    int total = 0;
+    for (int i=0; i < values.length; i++) {
+        for (int j=0; j < values[0].length; j++) {
+            total += values[i][j];
+        }
+    }
+\\  Print the array in tabular form.
+    for (int i=0; i < values.length; i++) {
+        for (int j=0; j < values[0].length; j++) {
+            System.out.print(values[i][j])
+            if (j == values[0].length - 1) {
+                System.out.print("/n")
+            }
+        }
+    }
+
+
+R6.34 Understanding arrays
+a/  True
+b/  True
+c/  False
+d/  True
+e/  False
+f/  False
+
+
+R7.1 Exceptions
+When a file doesn't exist for reading or writing, the program will throw a FileNotFoundException error.
+
+
+R7.6 Throwing and catching
+Throwing is used when the current method cannot handle a potential exception.
+It signals the caller of the method that it may encounter a certain exceptions,
+then lets the caller decide whether to handle it or declare that it may be thrown.
+Catching is used to handle the exception that occurs in associated try block.
+
+
+R7.7 Checked versus unchecked
+Checked exceptions are those exceptions that the compiler checks.
+All checked exceptions must be declared or caught.
+Unchecked exceptions are those exceptions that the compiler doesn't check.
+The throw clause supports both checked and unchecked exceptions.
+
+
+R7.8 Exceptions philosophy in Java
+IndexOutOfBoundsExceptions is an unchecked exception.
+Unchecked exceptions do not need to be declared by throws.
+
+
+R7.11 What is an exception object
+The catch clause can receive exception objects and analyze them for details about the failure.
+The object contains information about the error, including type and state of program when exception was thrown.
+
+
+R7.15 Scanner exceptions. Explain why these are either checked or unchecked.
+next can throw NoSuchElementException and IllegalStateException errors.
+nextInt can throw InputMismatchException, NoSuchElementException, and IllegalStateException errors.
+All of these exceptions are examples of unchecked exceptions because they are dependent on user input.
