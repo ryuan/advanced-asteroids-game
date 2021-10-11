@@ -6,6 +6,9 @@ import java.util.Random;
  */
 public class E6_1 {
     public static void evenIndex(int[] randomNumbers) {
+        /*
+        Print out the even index elements by relying on modular division
+         */
         System.out.print("The elements with even index are: ");
 
         for (int i = 0; i < randomNumbers.length; i++) {
@@ -16,6 +19,9 @@ public class E6_1 {
     }
 
     public static void evenElement(int[] randomNumbers) {
+        /*
+        Print out all the even elements by relying on modular division
+         */
         System.out.print("The even elements are: ");
 
         for (int element : randomNumbers) {
@@ -26,6 +32,9 @@ public class E6_1 {
     }
 
     public static void reverseOrder(int[] randomNumbers) {
+        /*
+        Print out the reversed order array by using for loop with decremental index
+         */
         System.out.print("The reversed order array is: ");
 
         for (int i = randomNumbers.length - 1; i >= 0; i--) {
@@ -34,11 +43,17 @@ public class E6_1 {
     }
 
     public static void firstLast(int[] randomNumbers) {
+        /*
+        Print out the first and last element of the input array
+         */
         System.out.print("The first and last elements are: ");
         System.out.print(randomNumbers[0] + " " + randomNumbers[randomNumbers.length - 1]);
     }
 
     public static void main(String[] args) {
+        /*
+        Generate array of 10 random integers and print each integer
+         */
         Random rand = new Random();
         int[] randomNumbers = new int[10];
 
@@ -49,6 +64,9 @@ public class E6_1 {
         }
         System.out.println();
 
+        /*
+        Call the other methods to print out the array stats
+         */
         evenIndex(randomNumbers);
         System.out.println();
         evenElement(randomNumbers);

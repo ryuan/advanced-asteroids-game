@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class P5_8 {
     public static boolean isLeapYear(int year) {
         /*
-        Calculate if the input year is a leap year and print the result
+        Calculate if the input year is a leap year and return true/false
          */
         if ((year % 400 == 0 || year % 100 != 0) && year % 4 == 0) {
             return true;

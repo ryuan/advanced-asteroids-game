@@ -9,6 +9,9 @@ import java.util.Scanner;
  */
 public class E7_4 {
     public static void main(String[] args) throws FileNotFoundException {
+        /*
+        Get user input for the file name and prepare a File objects to read in lines
+        */
         Scanner console = new Scanner(System.in);
         System.out.print("Input file: ");
         String inputFileName = console.next();
@@ -19,6 +22,9 @@ public class E7_4 {
         Scanner in = new Scanner(inputFile);
         PrintWriter out = new PrintWriter(outputFileName);
 
+        /*
+        Update a counter for each line that is read and prefix the index/counter number
+        */
         int counter = 1;
         while (in.hasNextLine()) {
             String line = in.nextLine();

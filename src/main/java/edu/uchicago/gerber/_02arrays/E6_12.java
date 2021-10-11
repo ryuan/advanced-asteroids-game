@@ -7,6 +7,9 @@ import java.util.Arrays;
  */
 public class E6_12 {
     public static void main(String[] args) {
+        /*
+        Generate 20 random integers between 0 and 99
+         */
         Random rand = new Random();
         int[] randomNumbers = new int[20];
 
@@ -17,6 +20,9 @@ public class E6_12 {
         }
         System.out.println();
 
+        /*
+        Sort the array then print the integers to prove correctness
+         */
         Arrays.sort(randomNumbers);
         System.out.print("The sorted array is: ");
         for (int element : randomNumbers) {

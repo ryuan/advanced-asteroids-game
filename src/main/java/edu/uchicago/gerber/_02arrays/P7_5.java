@@ -8,12 +8,18 @@ import java.io.*;
  */
 public class P7_5 {
     public static void main(String[] args) throws FileNotFoundException {
+        /*
+        Get file name from user and create a CSVReader object
+         */
         Scanner console = new Scanner(System.in);
         System.out.print("Input file: ");
         String inputFileName = console.next();
 
         CSVReader reader = new CSVReader(inputFileName);
 
+        /*
+        Take user input when necessary to return specific details about the CSV
+         */
         System.out.println("The CSV file has " + reader.numberOfRows() + " number of rows.");
 
         Scanner in = new Scanner(System.in);
@@ -29,6 +35,10 @@ public class P7_5 {
 class CSVReader {
     ArrayList<String> rows = new ArrayList<>();
 
+    /*
+    Receives the file name as an argument, prepare a File objects,
+    then update array list by reading lines
+     */
     public CSVReader(String fileName) throws FileNotFoundException {
         File inputFile = new File(fileName);
         Scanner in = new Scanner(inputFile);
@@ -42,15 +52,24 @@ class CSVReader {
         }
     }
 
+    /*
+    Return the number of rows for the CSVReader object
+     */
     public int numberOfRows() {
         return rows.size();
     }
 
+    /*
+    Return the number of fields in a given row
+     */
     public int numberOfFields(int row) {
         String[] fields = rows.get(row-1).split(",");
         return fields.length;
     }
 
+    /*
+    Return the specific field based on row and column argument
+     */
     public String field(int row, int column) {
         String[] fields = rows.get(row-1).split(",");
         return fields[column-1];
