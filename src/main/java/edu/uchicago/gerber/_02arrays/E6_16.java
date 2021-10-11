@@ -20,10 +20,13 @@ public class E6_16 {
             propNumbers[i] = (int) ratio;
         }
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 20; i > 0; i--) {
             for (int element : propNumbers) {
                 if (element >= i) {
                     System.out.print("*");
+                }
+                else {
+                    System.out.print(" ");
                 }
             }
             System.out.println();
