@@ -1,5 +1,4 @@
 package edu.uchicago.gerber._02arrays;
-import java.util.Scanner;
 import java.util.Random;
 
 /**
