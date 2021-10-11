@@ -2,7 +2,7 @@ package edu.uchicago.gerber._01control;
 import java.util.Scanner;
 
 /**
- * Prompts user for a year to consider if it is a leap year.
+ * P3_14: Prompts user for a year to consider if it is a leap year.
  */
 public class P3_14 {
     public static void main(String[] args) {
