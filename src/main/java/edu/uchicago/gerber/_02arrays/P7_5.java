@@ -22,11 +22,14 @@ public class P7_5 {
          */
         System.out.println("The CSV file has " + reader.numberOfRows() + " number of rows.");
 
+        System.out.print("Enter a row number (max of " + reader.numberOfRows() + ") to check for number of fields: ");
         Scanner in = new Scanner(System.in);
         int rowInput = in.nextInt();
         System.out.println("Row " + rowInput + " has " + reader.numberOfFields(rowInput) + " fields.");
 
+        System.out.print("First, enter the row number (max of " + reader.numberOfRows() + ") of your requested field data: ");
         rowInput = in.nextInt();
+        System.out.print("Now, enter the column number (max of " + reader.numberOfFields(rowInput) + ") to get the field data: ");
         int columnInput = in.nextInt();
         System.out.println("Row " + rowInput + ", Col " + columnInput + ": " + reader.field(rowInput, columnInput));
     }

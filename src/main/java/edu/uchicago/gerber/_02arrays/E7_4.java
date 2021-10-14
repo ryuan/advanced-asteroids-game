@@ -28,7 +28,7 @@ public class E7_4 {
         int counter = 1;
         while (in.hasNextLine()) {
             String line = in.nextLine();
-            out.print("/*" + counter + "*/ " + line);
+            out.println("/* " + counter + " */ " + line);
             counter += 1;
         }
 
