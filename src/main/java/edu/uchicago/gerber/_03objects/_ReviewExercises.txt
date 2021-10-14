@@ -4,7 +4,71 @@
 
 
 R8.1 Encapsulation
+Encapsulation is the act of providing a public interface and hiding the implementation details.
+It serves the purpose of making it easier for future programmers to focus on implementing your classes
+in their programs without having to be inundated with unnecessary details.
+Implementation details can change in the future without its main purpose being updated.
 
 
+R8.4 Public interface
+The public interface is the set of all methods provided by a class, together with the description
+of their purpose and behavior. The implementation of a class is concerned with the details of how
+the class and its methods are actually coded to support their functionalities.
 
 
+R8.7 Instance versus static
+Instance methods are methods that you invoke on a particular object and can act on
+the instance variable of that object.
+A static methods, by contrast, is not invoked on an object.
+
+
+R8.8 Mutator and accessor
+A mutator method manipulates and modifies the object on which it operates.
+An accessor method queries the object for some information/attribute without changing it.
+
+R8.9 Implicit parameter
+The object on which an instance method is invoked is called the implicit parameter of the method.
+In contrast, explicit parameters are explicitly mentioned in the method declaration.
+
+
+R8.10 Implicit parameter
+An instance method has only one implicit parameter, which is the object itself.
+Static methods are not invoked on objects, so they do not have any implicit parameters - only explicit.
+An instance method can receive any number of explicit parameters so long as the method itself
+can handle those inputs when executing the method.
+
+
+R8.12 Constructors
+Classes can have multiple constructors, allowing multiple ways to declare objects.
+For example, you can have one constructor for initiating an object with no arguments supplied,
+and another constructor for initiating an object with an explicit parameter passed in.
+For multiple constructor classes, the compiler chooses which one is relevant based on arguments supplied.
+Along the same lines, it is possible for a class to not have any constructors.
+If no constructor is present, the compiler will simply create one and initiate
+all instance variables at their default values.
+
+
+R8.16 Instance variables
+The private reserved word hides the implementation of the class by making the instance variables
+of that class inaccessible to any method that does not belong to the same class.
+By doing so, it protects the instance variables of any object belonging to that class from
+being directly accessed and modified, forcing users of those classes to use methods to access them.
+This ensures that the object maintains its integrity, so any methods that rely on the instance variable
+can be predictably executed without worry that that instance variables were unintentionally tampered with.
+
+
+R8.19 The this reference
+The this reference in an instance method refers to the implicit parameter of the object itself.
+You can choose to use it to make your program easier to read for future developers.
+For example, the this reference helps distinguish instance variable from local variables
+when writing methods. It can also help clarify what object is being invoked when a constructor
+or instance method calls another instance method on the same object.
+
+
+R8.20 Zero, null, false, empty String
+Zero is the default value for any initialized number data type.
+The null reference is the default for any initialized object - null refers to no object.
+The false value is the default value for any initialized boolean data type.
+An empty string is an object of String class with length 0 - it is not null.
+In order to create an empty string object, you must explicitly create a new String object and
+initialize it with the "" empty string value, otherwise it will default to a null reference.
