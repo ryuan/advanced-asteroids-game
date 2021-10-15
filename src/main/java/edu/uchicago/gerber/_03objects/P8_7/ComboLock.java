@@ -1,9 +1,9 @@
 package edu.uchicago.gerber._03objects.P8_7;
 
 public class ComboLock {
-    private int secret1;
-    private int secret2;
-    private int secret3;
+    private final int secret1;
+    private final int secret2;
+    private final int secret3;
     private int state;
     private int currentNum;
 
@@ -77,13 +77,5 @@ public class ComboLock {
 
     public boolean open() {
         return state == 3;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public int getCurrentNum() {
-        return currentNum;
     }
 }

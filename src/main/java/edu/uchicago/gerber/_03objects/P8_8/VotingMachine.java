@@ -3,7 +3,7 @@ package edu.uchicago.gerber._03objects.P8_8;
 public class VotingMachine {
     private int votesDem;
     private int votesRep;
-    private int[] votesTotal;
+    private final int[] votesTotal;
 
     public VotingMachine() {
         this.votesDem = 0;
