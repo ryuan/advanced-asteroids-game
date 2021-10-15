@@ -12,11 +12,11 @@ public class Driver {
         int input = 0;
         while (input != 4 || microwave.getTimer() == 0) {
             System.out.println("You see four different buttons on your microwave.");
-            System.out.println("(Type the number for the button you want to press)");
-            System.out.println("Button 1: Add 30 seconds to the timer");
-            System.out.println("Button 2: Change the power level between 1 and 2");
-            System.out.println("Button 3: Reset the timer");
-            System.out.println("Button 4: Start the microwave!");
+            System.out.println("Button 1 - Add 30 seconds to the timer");
+            System.out.println("Button 2 - Change the power level between 1 and 2");
+            System.out.println("Button 3 - Reset the timer");
+            System.out.println("Button 4 - Start the microwave!");
+            System.out.print("Type the number for the button you want to press: ");
 
             input = in.nextInt();
             if (input == 1) {
