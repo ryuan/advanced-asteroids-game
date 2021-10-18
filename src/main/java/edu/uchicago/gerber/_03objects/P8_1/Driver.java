@@ -6,8 +6,12 @@ import  java.util.Scanner;
  */
 public class Driver {
     public static void main(String[] args) {
+        /*
+        Initiate Microwave and Scanner objects
+         */
         Microwave microwave = new Microwave();
         Scanner in = new Scanner(System.in);
+
 
         int input = 0;
         while (input != 4 || microwave.getTimer() == 0) {
@@ -18,6 +22,9 @@ public class Driver {
             System.out.println("Button 4 - Start the microwave!");
             System.out.print("Type the number for the button you want to press: ");
 
+            /*
+            Take user input for different microwave options then execute corresponding instance methods
+            */
             input = in.nextInt();
             if (input == 1) {
                 microwave.add30Button();
@@ -26,12 +33,18 @@ public class Driver {
             } else if (input == 3) {
                 microwave.resetButton();
             } else if (input == 4) {
+                /*
+                Microwave cannot run with 0 seconds on timer. Otherwise, run it and end program.
+                 */
                 if (microwave.getTimer() == 0) {
                     System.out.println("There's 0 seconds on the timer! Microwave just makes a beeping noise.");
                 } else {
                     microwave.startButton();
                     System.out.println("Thanks for using the microwave!");
                 }
+                /*
+                Safety check in case user inputs an unavailable option
+                 */
             } else {
                 System.out.println("The option you selected does not exist! Try again...");
             }
