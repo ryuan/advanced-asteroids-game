@@ -1,6 +1,9 @@
 package edu.uchicago.gerber._03objects.P8_8;
 import java.util.Scanner;
 
+/**
+ * Collects votes for Democrats and Republic, allowing data revtrieval
+ */
 public class Driver {
     public static void main(String[] args) {
         /*

@@ -1,6 +1,9 @@
 package edu.uchicago.gerber._03objects.P8_6;
 import java.util.Scanner;
 
+/**
+ * P8_6: Program to calculate and return soda can surface area and volume based on user inputs
+ */
 public class Driver {
     public static void main(String[] args) {
         /*

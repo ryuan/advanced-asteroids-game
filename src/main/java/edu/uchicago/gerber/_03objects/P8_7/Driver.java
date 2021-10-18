@@ -1,6 +1,9 @@
 package edu.uchicago.gerber._03objects.P8_7;
 import java.util.Scanner;
 
+/**
+ * P8_7: Allow user to lock and unlock a combo lock
+ */
 public class Driver {
     public static void main(String[] args) {
         /*
