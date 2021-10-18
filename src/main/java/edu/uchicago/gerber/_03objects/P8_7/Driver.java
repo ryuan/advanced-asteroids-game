@@ -3,8 +3,14 @@ import java.util.Scanner;
 
 public class Driver {
     public static void main(String[] args) {
+        /*
+        Initiate new Scanner object
+         */
         Scanner in = new Scanner(System.in);
 
+        /*
+        Set the combination lock
+         */
         int secret1 = 999;
         while (secret1 < 0 || secret1 > 39) {
             System.out.print("\nSet your lock's first combination number: ");
@@ -30,19 +36,31 @@ public class Driver {
             }
         }
 
+        /*
+        Pass the three lock numbers from user to initiate ComboLock object
+         */
         ComboLock lock = new ComboLock(secret1, secret2, secret3);
         System.out.println("\nYour lock is now set! Try to unlock it...");
 
+        /*
+        Initiate default variables for combo unlocking control flow
+         */
         String action = "";
         String direction = "";
         int ticks = 999;
 
 
+        /*
+        Loop through the different options for unlocking the ComboLock, ensuring valid inputs along the way
+         */
         while (!action.equalsIgnoreCase("T") || !action.equalsIgnoreCase("R") || !action.equalsIgnoreCase("O")) {
             System.out.println("\nDo you want to turn, reset, or open the lock?");
             System.out.print("Type T to turn, R to reset, or O to open: ");
             action = in.next();
 
+            /*
+            If user chooses to turn lock, give option to turn it left or right and take number of ticks as input
+             */
             if (action.equalsIgnoreCase("T")) {
                 while (!direction.equalsIgnoreCase("L") && !direction.equalsIgnoreCase("R")) {
                     System.out.print("\nTurn the lock left or right? Type L for left, R for right: ");
@@ -63,17 +81,26 @@ public class Driver {
                     lock.turnRight(ticks);
                 }
 
+                /*
+                Resets the control flow variables to prepare for next loop
+                 */
                 action = "";
                 direction = "";
                 ticks = 999;
             }
 
+            /*
+            Give user the option to reset the lock
+             */
             if (action.equalsIgnoreCase("R")) {
                 lock.reset();
                 System.out.println("\nThe turns have been reset. You can try to unlock it again.");
                 action = "";
             }
 
+            /*
+            Give user the option to open the lock. If successful, program ends.
+             */
             if (action.equalsIgnoreCase("O")) {
                 if (lock.open()) {
                     System.out.println("\nYou opened the lock - hooray!!!");
