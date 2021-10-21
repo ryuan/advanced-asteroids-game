@@ -2,8 +2,71 @@
 # Use this file to answer Review Exercises from the Big Java textbook
 #########################################################################
 
+R9.1 Superclass and subclass
+    Superclass  Subclass
+a/  Employee    Manager
+b/  Student     GraduateStudent
+c/  Person      Student
+d/  Employee    Professor
+e/  BankAccount CheckingAccount
+f/  Vehicle     Car
+g/  Vehicle     Minivan
+h/  Car         Minivan
+i/  Vehicle     Truck
 
 
+R9.2 superclass and subclass
+Because the store we are dealing with is a small appliance store, we can expect the inventory
+to be mostly small appliances. Because they are the same type of items, the behavior of these items
+will share too much similarity to warrant any subclass construction.
 
 
+R9.4 SavingsAccount
+The SavingsAccount subclass inherits the deposit() and getBalance() methods,
+while overriding the withdraw() and monthEnd() methods. It adds a new setInterestRate() method.
 
+
+R9.6 Sandwich
+a/  Legal
+b/  Illegal
+c/  Illegal
+d/  Legal
+
+
+R9.7 Inheritance -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+src/main/java/edu/uchicago/gerber/_04interfaces/P9_7/P9_7_UML_Diagram.uml
+
+
+R9.8 Inheritance -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+src/main/java/edu/uchicago/gerber/_04interfaces/P9_8/P9_8_UML_Diagram.uml
+
+
+R9.9 Inheritance -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+src/main/java/edu/uchicago/gerber/_04interfaces/P9_9/P9_9_UML_Diagram.uml
+
+
+R9.10 Casting
+Casting *(int) x* will risk a loss in precision from one value to another
+(potentially changing the underlying primitive value entirely).
+Casting *(BankAccount) x* will not change the value, but may be invalid and
+throw a class cast exception.
+
+
+R9.11 instanceof operator
+a/  true
+b/  true
+c/  false
+d/  true
+e/  false
+f/  false
+
+
+R9.14 Edible interface
+a/  legal
+b/  illegal
+c/  legal
+d/  illegal
+e/  illegal
+f/  legal
+g/  illegal
+h/  illegal

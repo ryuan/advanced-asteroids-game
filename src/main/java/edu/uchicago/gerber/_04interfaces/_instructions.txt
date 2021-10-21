@@ -5,13 +5,13 @@ proInterfaces : Interfaces
 Review Exercises: 3 points each. Place your answers in
 ReviewExercises.txt located in the root of this project director.
 
-R9.1 Superclas and subclass
+R9.1 Superclass and subclass
 R9.2 superclass and subclass
 R9.4 SavingsAccount
 R9.6 Sandwich
-R9.7 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
-R9.8 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
-R9.9 Inheretence -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+R9.7 Inheritance -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+R9.8 Inheritance -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
+R9.9 Inheritance -use the UML diagram tool in IntelliJ and indicate to the grader where uml file is located
 R9.10 Casting
 R9.11 instanceof operator
 R9.14 Edible interface

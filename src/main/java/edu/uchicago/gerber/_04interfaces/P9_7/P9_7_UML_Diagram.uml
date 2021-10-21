@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>edu.uchicago.gerber._04interfaces.UML_Diagrams</OriginalElement>
+  <nodes>
+    <node x="-349.0" y="106.0">edu.uchicago.gerber._04interfaces.UML_Diagrams.Instructor</node>
+    <node x="-14.5" y="-205.0">edu.uchicago.gerber._04interfaces.UML_Diagrams.Object</node>
+    <node x="-226.5" y="-30.0">edu.uchicago.gerber._04interfaces.UML_Diagrams.Employee</node>
+    <node x="-118.0" y="-111.0">edu.uchicago.gerber._04interfaces.UML_Diagrams.Person</node>
+    <node x="114.5" y="-111.0">edu.uchicago.gerber._04interfaces.UML_Diagrams.Classroom</node>
+    <node x="15.0" y="112.0">edu.uchicago.gerber._04interfaces.UML_Diagrams.Student</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="edu.uchicago.gerber._04interfaces.UML_Diagrams.Instructor" target="edu.uchicago.gerber._04interfaces.UML_Diagrams.Employee" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="-284.5" y="215.0" />
+      <point x="-162.5" y="215.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.uchicago.gerber._04interfaces.UML_Diagrams.Student" target="edu.uchicago.gerber._04interfaces.UML_Diagrams.Person" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="72.0" y="135.0" />
+      <point x="-64.5" y="135.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.uchicago.gerber._04interfaces.UML_Diagrams.Employee" target="edu.uchicago.gerber._04interfaces.UML_Diagrams.Person" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="-162.5" y="135.0" />
+      <point x="-64.5" y="135.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.uchicago.gerber._04interfaces.UML_Diagrams.Classroom" target="edu.uchicago.gerber._04interfaces.UML_Diagrams.Object" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="182.0" y="55.0" />
+      <point x="37.5" y="55.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="edu.uchicago.gerber._04interfaces.UML_Diagrams.Person" target="edu.uchicago.gerber._04interfaces.UML_Diagrams.Object" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="-64.5" y="55.0" />
+      <point x="37.5" y="55.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="53.5" y="55.0" />
+  <SelectedNodes>
+    <node>edu.uchicago.gerber._04interfaces.UML_Diagrams.Instructor</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
