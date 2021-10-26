@@ -19,6 +19,7 @@ R9.2 superclass and subclass
 Because the store we are dealing with is a small appliance store, we can expect the inventory
 to be mostly small appliances. Because they are the same type of items, the behavior of these items
 will share too much similarity to warrant any subclass construction.
+No uniquely helpful attributes can be declared for each item
 
 
 R9.4 SavingsAccount

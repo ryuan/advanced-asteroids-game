@@ -2,8 +2,8 @@ package edu.uchicago.gerber._04interfaces.P9_6;
 import java.time.*;
 
 public class Appointment {
-    private String description;
-    private LocalDate date;
+    private final String description;
+    private final LocalDate date;
 
     public Appointment(String description, LocalDate date) {
         this.description = description;

@@ -1,4 +1,4 @@
-package edu.uchicago.gerber._04interfaces.P9_17;
+package edu.uchicago.gerber._04interfaces.E9_17;
 
 
 public class SodaCan implements Measurable {

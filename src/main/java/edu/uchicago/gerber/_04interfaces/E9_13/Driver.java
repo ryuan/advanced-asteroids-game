@@ -5,6 +5,9 @@ public class Driver {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
+        /*
+        Loop through inputs ensuring proper integer inputs are assigned
+         */
         int width = 0;
         int height = 0;
         while (width <1 && height <=0 ) {
@@ -14,6 +17,9 @@ public class Driver {
             height = in.nextInt();
         }
 
+        /*
+        Create BetterRectangle object and print out calculated results of perimeter and area
+         */
         BetterRectangle betterRec = new BetterRectangle(width, height);
 
         System.out.println("Perimeter is " + betterRec.getPerimeter());

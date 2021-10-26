@@ -10,6 +10,9 @@ public class BasicAccount extends BankAccount {
     public BasicAccount() {
     }
 
+    /*
+    Check if the Basic Account balance is sufficient to make withdrawal
+     */
     public void withdraw(double amount) {
         if (super.getBalance() - amount < 0 ) {
             System.out.printf("You don't have enough money in your account to withdraw $%.2f", amount);
