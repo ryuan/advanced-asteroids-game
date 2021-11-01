@@ -49,10 +49,22 @@ and reposition components within the allotted area.
 
 
 R11.11 ButtonGroup
-
+You need a button group object for radio buttons but not for check boxes because
+the radio buttons needs to find out whether one is turned on so others can be turned off.
+Check boxes, on the other hand, do not exclude each other so does not require button group.
 
 
 R11.19 Types of Events
+ActionEvent is detected by the ActionListener and can detect component-specific actions
+such as buttons, check boxes, etc. Because only one event of such type can happen at any time,
+only one ActionEvent can be processed at any time. MouseEvent is detected by the MouseListener
+and can detect clicks, moves, releases and other mouse actions. Because multiple mouse actions
+can occur simultaneously (click and drag), MouseEvent can register more than one event at a time.
+
+
 R11.20 Events
+
+
+
 R11.21 ActionListener versus MouseListener
 
