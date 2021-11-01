@@ -63,8 +63,12 @@ can occur simultaneously (click and drag), MouseEvent can register more than one
 
 
 R11.20 Events
-
+Action events can carry info such as when shift, control, and other buttons are held down during
+the events, as well as event id indicating that a meaningful action occurred.
+Mouse events can carry additional info such as mouse button press, button release, moves, and drags.
 
 
 R11.21 ActionListener versus MouseListener
-
+ActionListener only has one method buttons can only be pressed to register an event,
+whereas MouseListener must recognize all different actions possible through the mouse device,
+such as clicks, hovering in and out of components, etc.
