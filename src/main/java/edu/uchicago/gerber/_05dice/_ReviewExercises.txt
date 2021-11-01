@@ -3,7 +3,56 @@
 #########################################################################
 
 
+R10.5 Events
+Event objects are objects of the program that allow users to interact with the program
+and include both sources and listeners to define events, when they occur, and what to do.
+
+Event sources are the buttons and other components that generate a particular event.
+Event source calls the appropriate methods of attached event listeners.
+
+Event listeners are objects that indicate which events must occur.
+They are objects that are instance of classes, and the methods of
+event listener classes contain instructions that you want executed when events occur.
+
+
+R10.6 actionPerformed
+The actionPerformed method is called by the user and the JVM when the event occurs,
+at which point the Java event handling library calls the listener's actionPerformed method.
+In terms of timing, the call to actionPerformed occurs when the event is triggered and
+the listener object is able to detect it.
+
+
+R10.11 Inner class and event-listeners
+We use inner classes for event listeners to better organize our project code and to
+access instance variables and methods of the surrounding class.
+If Java did not have inner classes, we can still implement event listeners by
+creating a regular class, declaring the listener object, and adding it to the event source.
+
+
+R10.14 Object hierarchies
+Methods declared in JTextArea: append and getLineCount
+Methods that JTextArea inherits from JTextComponent: setText and setEditable
+Methods that JTextArea inherits from JComponent: setMinimumSize and setToolTipText
+
+
+R10.22 Graphic methods
+You would edit lines 25 and 27 by replacing the colors in the setColor method as desired.
+You can keep the coordinates the same, as well as the black color outlines above and below
+the flag's middle white portion. Randomization can also be used to edit the green and red
+colors of the Italian flag to anything else.
+
+
+R11.2 Layout managers
+The advantage of a layout manager over telling the container "place this component at
+position (x, y)" is that the former can dynamically adjust its container layouts to fit
+and reposition components within the allotted area.
+
+
+R11.11 ButtonGroup
 
 
 
+R11.19 Types of Events
+R11.20 Events
+R11.21 ActionListener versus MouseListener
 
