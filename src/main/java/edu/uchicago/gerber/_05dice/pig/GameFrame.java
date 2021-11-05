@@ -79,8 +79,9 @@ public class GameFrame extends JFrame implements ActionListener {
         aiScore.setText(player2.getStrScore());
 
         if (((player1.getCurrentTurnScore() + player1.getScore()) >= 100) || ((player2.getCurrentTurnScore() + player2.getScore()) >= 100) ) {
-            message.setText("Final score:");
-            message.setText(player1.getName() + ": " + player1.getScore() + " - " + player2.getName() + ": " + player2.getScore());
+            playerScore.setText(Integer.toString(player1.getScore() + player1.getCurrentTurnScore()));
+            aiScore.setText(Integer.toString(player2.getScore() + player2.getCurrentTurnScore()));
+            message.setText("Final score:\n" + player1.getName() + ": " + playerScore.getText() + " - " + player2.getName() + ": " + aiScore.getText());
             buttonRoll.setEnabled(false);
             buttonHold.setEnabled(false);
         }

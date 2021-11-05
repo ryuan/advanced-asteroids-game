@@ -38,6 +38,7 @@ public class Player {
     }
 
     public void aiTurn() {
+        currentTurnScore = 0;
         int result = 0;
         while (currentTurnScore < 20 && result != 1) {
             result = this.random.nextInt(6) + 1;
@@ -49,7 +50,6 @@ public class Player {
 
         score += currentTurnScore;
         this.output.setText(this.name + " ends the turn scoring " + this.currentTurnScore);
-        currentTurnScore = 0;
     }
 
     public String getStrCurrentTurnScore() {
