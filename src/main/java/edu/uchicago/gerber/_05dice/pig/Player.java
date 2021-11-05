@@ -1,88 +1,74 @@
 package edu.uchicago.gerber._05dice.pig;
 
-import java.io.PrintStream;
+import javax.swing.*;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Player {
-    private final String name;
-    private final Random random;
-    private final Scanner scanner;
-    private final PrintStream output;
+    private String name;
+    private Random random;
+    private JTextArea output;
     private int score;
+    private int currentTurnScore;
 
-    public Player(String name, Random random, Scanner scanner, PrintStream output) {
+    public Player(String name, Random random, JTextArea output) {
         this.name = name;
         this.random = random;
-        this.scanner = scanner;
         this.output = output;
     }
 
-    public boolean playTurn() {
-        output.println(this.name + "'s turn.");
+    public int playerTurn(boolean roll) {
+        if (roll) {
+            int result = this.random.nextInt(6) + 1;
+            this.output.setText(this.name + " rolled a " + result);
+            currentTurnScore += result;
 
-        int currentTurnScore = 0;
-        if (this.name.equals("Player")) {
-            do {
-                int result = this.random.nextInt(6) + 1;
-                this.output.println(this.name + " rolled a " + result);
-                currentTurnScore += result;
+            if (result == 1) {
+                currentTurnScore = 0;
+            }
 
-                if (result == 1) {
-                    currentTurnScore = 0;
-                    break;
-                }
-                this.output.println(this.name + "'s score so far this turn is " + currentTurnScore + ".");
-            } while (this.score + currentTurnScore < 100 && this.rollAgain());
+            this.output.setText(this.name + " rolled a " + result + "\n" + this.name + "'s score this turn is " + currentTurnScore);
         }
         else {
-            do {
-                int result = this.random.nextInt(6) + 1;
-                this.output.println(this.name + " rolled a " + result + ".");
-                currentTurnScore += result;
-
-                if (result == 1) {
-                    currentTurnScore = 0;
-                    break;
-                }
-                this.output.println(this.name + "'s score so far this turn is " + currentTurnScore);
-            } while (this.score + currentTurnScore < 100 && this.randomAI(currentTurnScore));
+            score += currentTurnScore;
+            currentTurnScore = 0;
+            this.output.setText(this.name + " ends the turn scoring " + this.score);
         }
 
-        this.score += currentTurnScore;
-        this.output.println(this.name + " ends the turn scoring " + this.score);
-
-        return (this.score >= 100);
+        return currentTurnScore;
     }
 
-    public String getName() {
-        return name;
+    public void aiTurn() {
+        int result = 0;
+        while (currentTurnScore < 20 && result != 1) {
+            result = this.random.nextInt(6) + 1;
+            currentTurnScore += result;
+            if (result == 1) {
+                currentTurnScore = 0;
+            }
+        }
+
+        score += currentTurnScore;
+        this.output.setText(this.name + " ends the turn scoring " + this.currentTurnScore);
+        currentTurnScore = 0;
+    }
+
+    public String getStrCurrentTurnScore() {
+        return Integer.toString(currentTurnScore);
+    }
+
+    public int getCurrentTurnScore() {
+        return currentTurnScore;
+    }
+
+    public String getStrScore() {
+        return Integer.toString(score);
     }
 
     public int getScore() {
         return score;
     }
 
-    private String answer() {
-        return scanner.nextLine().replaceAll(" ","").toUpperCase();
-    }
-
-    private boolean rollAgain() {
-        this.output.println("Do you want to roll again? (Y/N)");
-        String choice = this.answer();
-
-        while (!(choice.equals("Y") || choice.equals("N"))) {
-            this.output.println("You have to enter Y or N:");
-            choice = this.answer();
-        }
-
-        return choice.equals("Y");
-    }
-
-    private boolean randomAI(int currentScore) {
-        if (currentScore < 20) {
-            this.output.println(this.name + " chooses to roll again.");
-        }
-        return (currentScore < 20);
+    public String getName() {
+        return name;
     }
 }

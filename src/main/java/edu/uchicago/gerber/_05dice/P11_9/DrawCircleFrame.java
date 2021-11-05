@@ -12,6 +12,15 @@ public class DrawCircleFrame extends JFrame {
 
     private CircleComponent scene;
 
+    public DrawCircleFrame () {
+        scene = new CircleComponent();
+        add(scene);
+        MouseListener listener = new MousePressListener();
+        scene.addMouseListener(listener);
+
+        setSize(FRAME_WIDTH, FRAME_HEIGHT);
+    }
+
     class MousePressListener implements MouseListener {
         public void mousePressed(MouseEvent event) {
             if (p1 == null || p2 != null) {
@@ -27,14 +36,5 @@ public class DrawCircleFrame extends JFrame {
         public void mouseClicked(MouseEvent event) {}
         public void mouseEntered(MouseEvent event) {}
         public void mouseExited(MouseEvent event) {}
-    }
-
-    public DrawCircleFrame () {
-        scene = new CircleComponent();
-        add(scene);
-        MouseListener listener = new MousePressListener();
-        scene.addMouseListener(listener);
-
-        setSize(FRAME_WIDTH, FRAME_HEIGHT);
     }
 }
