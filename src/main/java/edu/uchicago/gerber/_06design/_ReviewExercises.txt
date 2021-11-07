@@ -3,7 +3,107 @@
 #########################################################################
 
 
+R12.1 OO Analysis and Design
+Understand the requirements specification and discover classes to implement the requirements.
+A good way to do this is to look for nouns (classes) and verbs (methods) in the req spec.
+You can use the CRC card method to match classes with a matching verb/responsibilities and
+collaborators (i.e., another class that is needed to carry out the responsibility).
 
 
+R12.2 OO Analysis and Design
+When finding classes, investigate the requirements specification and pick out key nouns.
+They will often represent opportunities for new classes to be created.
+
+R12.3 OO Analysis and Design
+When finding methods, investigate the requirements specification and pick out key verbs.
+They will often represent opportunities for what class objects can do to accomplish responsibilities.
+
+R12.8 Relationships
+Class Coin
+    Responsibility: maintain values of individual coins
+        Collaborator: none
+
+Class CashRegister
+    Responsibility: holds coins
+        Collaborator: Coin object
+    Responsibility: accepts and hold payment in register
+        Collaborator: Coin object
+
+R12.9 CRC Quiz
+class Quiz
+    Responsibility: aggregate and hold any number of questions
+        Collaborator: Question objects
+    Responsibility: allow entry, access, editing, deleting of Questions
+        Collaborator: Question objects
+    Responsibility: present questions and take responses
+        Collaborator: Question objects
+
+
+class Question
+    Responsibility: create and edit questions of different types
+        Collaborator: none
+    Responsibility: maintain answer to question
+        Collaborator: none
+
+
+R12.10 UML Quiz
+src/main/java/edu/uchicago/gerber/_06design/R12_10/R12_10.uml
+More specifically, Quiz is an aggregation of Question. ChoiceQuestion inherits Question.
+
+R12.11 CRC Cards
+File with records (name, population, area) of countries.
+Program reads file and prints country w/ 1) largest area, 2) largest population, 3) largest pop density
+
+class ReadFile
+    Responsibility: read file to create Country objects
+        Collaborator: Country, CountryList
+
+class Country
+    Responsibility: store country attributes area, population, and name
+        Collaborator: ReadFile
+    Responsibility: calculate population density
+        Collaborator: none
+
+class CountryList
+    Responsibility: maintain list of Country objects
+        Collaborator: Country, ReadFile
+    Responsibility: return largest area, population, and pop density
+        Collaborator: Country
+
+UML diagram
+    CountryList is an aggregation of Country class objects
+    Country class object depends on ReadFile to be created
+
+javadoc comment
+    For ReadFile, javadoc can be:
+    /** Read file and creates/stores Country objects in CountryList **/
+    /** Reads a file, creates Country objects, and stores them in CountryList
+        @param textFile the file where the country data lives
+        @param aCountryList the CountryList object to append new Country to **/
+
+    For Country, javadoc can be:
+    /** Store country data and calculate population density **/
+
+    For CountryList, javadoc can be:
+    /** Maintain list of Country objects **/
+    /** Get largest area, population, and pop density of all stored countries **/
+
+R12.13 Class Implementation
+Classes: Coin, VendingMachine
+VendingMachine class is dependent on Coin class.
+Coin class stores different values.
+VendingMachine class accepts, stores, and returns proper coin values.
+
+R12.14 UML Implementation
+Classes: Employee, Paycheck
+Paycheck class is dependent on Employee, since its value is determined by Employee hours worked.
+You can pass an employee object's attributes to determine Paycheck's amount.
+
+R12.15 ULM Diagram
+Address class would likely include attributes for shipping and billing address.
+Since every Customer needs to have both shipping and billing address, it is dependent on the Address class.
+The Invoice is dependent on the Customer class, which allows it to access the billing address.
+It also aggregates a list of products that is included in the orders populated in the invoice.
+Product class would include the pricing and other attributes. Invoice and Customer are dependent on it.
 
 

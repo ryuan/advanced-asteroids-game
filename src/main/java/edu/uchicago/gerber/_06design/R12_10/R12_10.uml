@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>edu.uchicago.gerber._06design.R12_10</OriginalElement>
+  <nodes>
+    <node x="27.0" y="0.0">edu.uchicago.gerber._06design.R12_10.Question</node>
+    <node x="0.0" y="80.0">edu.uchicago.gerber._06design.R12_10.ChoiceQuestion</node>
+    <node x="0.0" y="155.0">edu.uchicago.gerber._06design.R12_10.Quiz</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="edu.uchicago.gerber._06design.R12_10.ChoiceQuestion" target="edu.uchicago.gerber._06design.R12_10.Question" relationship="GENERALIZATION">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="88.5" y="92.5" />
+  <SelectedNodes>
+    <node>edu.uchicago.gerber._06design.R12_10.Question</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
