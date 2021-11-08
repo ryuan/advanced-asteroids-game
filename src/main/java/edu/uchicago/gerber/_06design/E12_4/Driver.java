@@ -3,6 +3,8 @@ package edu.uchicago.gerber._06design.E12_4;
 public class Driver {
     public static void main(String[] args) {
         System.out.println("Welcome to the basic arithmetic game!");
+        System.out.println("There are 3 levels. Get 5 questions in each level to progress.");
+        System.out.println("Be careful - if you get a question wrong 3 times, it's GAME OVER.\n");
 
         Player player = new Player();
         Question question = new Question();

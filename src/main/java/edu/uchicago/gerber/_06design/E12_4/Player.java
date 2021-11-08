@@ -21,7 +21,9 @@ public class Player {
                 this.level ++;
                 this.tries = 0;
                 this.score = 0;
-                this.output.println("You got 5 questions right - you're now level " + this.level + "!");
+                if (this.level < 4) {
+                    this.output.println("You got 5 questions right - you're now level " + this.level + "!");
+                }
             }
             else {
                 this.score ++;
