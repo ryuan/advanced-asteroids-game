@@ -3,7 +3,7 @@ package edu.uchicago.gerber._06design.P12_1;
 import java.util.ArrayList;
 
 public class CoinSet {
-    ArrayList<Coin> holder;
+    private ArrayList<Coin> holder;
 
     public CoinSet() {
         this.holder = new ArrayList<>();
