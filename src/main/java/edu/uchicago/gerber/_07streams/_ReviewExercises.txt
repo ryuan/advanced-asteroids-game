@@ -2,8 +2,75 @@
 # Use this file to answer Review Exercises from the Big Java textbook
 #########################################################################
 
+R13.1 Terms
+\\Recursion - Technique that calls on the same method or smaller object, solving smaller
+subproblems down to the base condition to eventually solve the main problem.
+\\Iteration - Repeats the same part of the code by iterating through some index or items.
+\\Infinite recursion - When recursion has no termination point and keeps calling itself until
+all memory is exhausted and stack overflow error is returned.
+\\Recursive helper method - A recursive helper method is a recursive method that is called by
+another method by adjusting the original problem to make the recursive solution easier to obtain.
 
 
+R13.2 Smallest value
+If the array is a lone element, return it. Otherwise, recursively divide the array into two
+subarrays down the middle index, comparing the numbers returned by both halves and returning the smaller.
 
 
+R13.4 Sort array of numbers
+If the array is a lone element or empty, just return it. Otherwise, recursively divide the array
+into two left and right subarrays, then merge the results from the two by comparing values in
+one to the other to sort into a sorted array.
 
+
+R13.6 Exponents recursively
+If x^0 = 1. Otherwise, x^n = x * x^(n-1).
+
+
+R13.8 Factorial recursively
+If 0! = 1, otherwise n! = n * (n-1)!
+
+R19.1 operations on Stream<String>
+a\\
+int count = wordList.stream()
+    .filter(w -> w.startsWith("a"))
+    .count();
+b\\
+int count = wordList.stream()
+    .filter(w -> w.startsWith("a") && w.length() > 10)
+    .count();
+
+c\\
+boolean count = wordList.stream()
+    .filter(w -> w.startsWith("a"))
+    .count() >= 100;
+
+
+R19.3 How to read Java8
+Because Stream is lazy, it returns two potentially different results based on input.
+The first expression would first filter for up to the first 100 words with length > 10
+and then count how many matched those conditions. The second expression would first filter
+up to the first 100 words in the stream (no conditions applied), then count words with length > 10.
+
+
+R19.6 Transforming values
+Stream<Double> to Stream<String>:
+Stream<Double> doubleStream = Stream.of(2.4, 3.6, 7.0, 10.9)
+Stream<String> strs = doubleStream.map(d -> Double.toString(d))
+To reverse:
+Stream<Double> undo = strs.map(w -> Double.valueOf(w))
+
+
+R19.11 Terminal operations
+Object streams support:
+count(), findFirst(), findAny(), max(), min(), toArray(), collect(),
+forEach(), allMatch(), anyMatch(), noneMatch()
+Primitive streams support:
+count(), sum(), average(), max(), min(),
+
+
+R19.12 Collectors
+collect(Collectors.toList())
+collect(Collectors.toSet())
+collect(Collectors.joining()
+collect(Collectors.groupingBy())
