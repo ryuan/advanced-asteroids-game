@@ -29,20 +29,12 @@ public class Driver {
 
     public static boolean isPalindrome(String word) {
         int i = 0, j = word.length() - 1;
-        // While there are characters to compare
         while (i < j) {
-
-            // If there is a mismatch
             if (word.charAt(i) != word.charAt(j))
                 return false;
-
-            // Increment first pointer and
-            // decrement the other
             i++;
             j--;
         }
-
-        // Given string is a palindrome
         return true;
     }
 }
