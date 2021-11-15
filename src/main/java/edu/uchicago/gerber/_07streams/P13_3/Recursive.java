@@ -27,22 +27,22 @@ public class Recursive {
     }
 
     public void matchWords(int[] numbers, String result, int index) {
-        if (index == -1)
-        {
-            if (dictionary.contains(result))
-                wordList.add(result);
+        if (index == -1) {
+            if (this.dictionary.contains(result)) {
+                this.wordList.add(result);
+                return;
+            }
         }
 
-        int digit = numbers[index];
+        int number = numbers[index];
+        int letterOptions = this.keypad.get(number).size();
 
-        int len = keypad.get(digit).size();
-
-        for (int i = 0; i < len; i++) {
-            matchWords(numbers, keypad.get(digit).get(i) + result, index - 1);
+        for (int i = 0; i < letterOptions; i++) {
+            matchWords(numbers, this.keypad.get(number).get(i) + result, index-1);
         }
     }
 
     public ArrayList<String> getWordList() {
-        return wordList;
+        return this.wordList;
     }
 }
