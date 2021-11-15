@@ -50,7 +50,7 @@ E19.5 comma-separated values (you may need to read ahead to generics to complete
 E19.6 Transform currencies
 E19.7 Transform strings
 E19.16 GroupBy and collect
-E19.14 Parellel stream - you can use this txt version of War and Peace -> https://archive.org/stream/warandpeace030164mbp/warandpeace030164mbp_djvu.txt
+E19.14 Parallel stream - you can use this txt version of War and Peace -> https://archive.org/stream/warandpeace030164mbp/warandpeace030164mbp_djvu.txt
 
 
 
