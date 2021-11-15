@@ -1,6 +1,5 @@
 package edu.uchicago.gerber._07streams.E19_6;
 
-import java.util.Comparator;
 import java.util.Currency;
 import java.util.Set;
 import java.util.stream.Collectors;
