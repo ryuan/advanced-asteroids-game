@@ -19,10 +19,10 @@ public class Driver {
         return f + "..." + l;
     }
 
-    public static List<String> convert(Stream<String> words) {
+    public static String convert(Stream<String> words) {
         return words
                 .filter(w -> w.length() > 1)
                 .map(Driver::transform)
-                .collect(Collectors.toList());
+                .collect(Collectors.joining(" "));
     }
 }
