@@ -27,20 +27,16 @@ public class Recursive {
     }
 
     public void matchWords(int[] numbers, String result, int index) {
-        // if we have processed every digit of key, print result
         if (index == -1)
         {
             if (dictionary.contains(result))
                 wordList.add(result);
         }
 
-        // stores current digit
         int digit = numbers[index];
 
-        // size of the list corresponding to current digit
         int len = keypad.get(digit).size();
 
-        // one by one replace the digit with each character in the corresponding list and recur for next digit
         for (int i = 0; i < len; i++) {
             matchWords(numbers, keypad.get(digit).get(i) + result, index - 1);
         }

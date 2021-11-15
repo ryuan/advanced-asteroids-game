@@ -14,8 +14,8 @@ public class Driver {
         }
 
         Recursive test = new Recursive(dictionary);
-        int[] input = {5,2,8,2};
-        test.matchWords(input,"",input.length-1);
+        int[] input = {5, 2, 8, 2};
+        test.matchWords(input, "", input.length - 1);
         System.out.println(test.getWordList());
     }
 }
