@@ -10,13 +10,15 @@ public class Driver {
         Scanner wordFile = new Scanner(new File("src/main/java/edu/uchicago/gerber/_07streams/P13_3/words_alpha.txt"));
         ArrayList<String> dictionary = new ArrayList<>();
         while (wordFile.hasNextLine()) {
-            dictionary.add(wordFile.nextLine());
+            String word = wordFile.nextLine();
+            if (word.length() <= 10) {
+                dictionary.add(word);
+            }
         }
 
-        Recursive test = new Recursive(dictionary);
+        Recursive combo = new Recursive(dictionary);
         int[] input = {5, 2, 8, 2};
-        test.matchWords(input, "", input.length - 1);
-//        System.out.println(test.getWordList());
-//        System.out.println(input.length-1);
+        combo.combinations(input);
+        System.out.println(combo.getWordList());
     }
 }
