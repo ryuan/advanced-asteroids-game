@@ -5,15 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Recursive {
-    private final ArrayList<String> wordList;
+    private final ArrayList<ArrayList<ArrayList<String>>> wordList;
     private final List<List<Character>> keypad;
     private final ArrayList<String> dictionary;
 
     public Recursive(ArrayList<String> dictionary) {
         this.wordList = new ArrayList<>();
         this.keypad = Arrays.asList(
-                Arrays.asList(),
-                Arrays.asList(),
+                List.of(),
+                List.of(),
                 Arrays.asList( 'A', 'B', 'C' ),
                 Arrays.asList( 'D', 'E', 'F' ),
                 Arrays.asList( 'G', 'H', 'I' ),
@@ -26,10 +26,25 @@ public class Recursive {
         this.dictionary = dictionary;
     }
 
-    public void matchWords(int[] numbers, String result, int index) {
+    public void combinations(int[] numbers) {
+        for (int i = 0; i < numbers.length; i++) {
+            wordList.add(new ArrayList<>());
+        }
+
+        for (int i = 1; i < numbers.length + 1; i++) {
+            for (int j = 0; j < numbers.length + 1 - i; j++) {
+                int[] newArray = Arrays.copyOfRange(numbers, j, j+i);
+                ArrayList<String> output = new ArrayList<>();
+                matchWords(newArray, output, "", newArray.length-1);
+                wordList.get(i-1).add(output);
+            }
+        }
+    }
+
+    public void matchWords(int[] numbers, ArrayList<String> output, String result, int index) {
         if (index == -1) {
             if (this.dictionary.contains(result.toLowerCase())) {
-                this.wordList.add(result);
+                output.add(result);
                 return;
             }
             return;
@@ -39,20 +54,11 @@ public class Recursive {
         int letterOptions = this.keypad.get(number).size();
 
         for (int i = 0; i < letterOptions; i++) {
-            matchWords(numbers, this.keypad.get(number).get(i) + result, index-1);
+            matchWords(numbers, output, this.keypad.get(number).get(i) + result, index-1);
         }
     }
 
-    public void combinations(int[] numbers) {
-        for (int i = 1; i < numbers.length + 1; i++) {
-            for (int j = 0; j < numbers.length + 1 - i; j++) {
-                int[] newArray = Arrays.copyOfRange(numbers, j, j+i);
-                matchWords(newArray, "", newArray.length-1);
-            }
-        }
-    }
-
-    public ArrayList<String> getWordList() {
+    public ArrayList<ArrayList<ArrayList<String>>> getWordList() {
         return this.wordList;
     }
 }
