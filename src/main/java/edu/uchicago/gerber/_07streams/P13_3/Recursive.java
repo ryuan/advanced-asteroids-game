@@ -1,8 +1,6 @@
 package edu.uchicago.gerber._07streams.P13_3;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Recursive {
     private final ArrayList<ArrayList<ArrayList<String>>> wordList;
@@ -26,7 +24,7 @@ public class Recursive {
         this.dictionary = dictionary;
     }
 
-    public void combinations(int[] numbers) {
+    public ArrayList<String> combinations(int[] numbers) {
         for (int i = 0; i < numbers.length; i++) {
             wordList.add(new ArrayList<>());
         }
@@ -39,6 +37,9 @@ public class Recursive {
                 wordList.get(i-1).add(output);
             }
         }
+
+        ArrayList<String> allCombos = this.combineWords(numbers, 0);
+        return removeDupes(allCombos);
     }
 
     public void matchWords(int[] numbers, ArrayList<String> output, String result, int index) {
@@ -56,6 +57,40 @@ public class Recursive {
         for (int i = 0; i < letterOptions; i++) {
             matchWords(numbers, output, this.keypad.get(number).get(i) + result, index-1);
         }
+    }
+
+    public ArrayList<String> combineWords(int[] numbers, int index) {
+        if (numbers.length == 0) {
+            return new ArrayList<>();
+        }
+
+        ArrayList<String> allResults = new ArrayList<>();
+        for (int i = 1; i <= numbers.length; i++) {
+            ArrayList<String> possibleWords = wordList.get(i-1).get(index);
+            ArrayList<String> remainingWords;
+
+            if (i <= numbers.length - 1) {
+                int[] sliceNums = Arrays.copyOfRange(numbers, i, numbers.length);
+                remainingWords = combineWords(sliceNums, index + i);
+
+                for(String word : possibleWords){
+                    for(String remainingWord : remainingWords) {
+                        allResults.add(word + remainingWord);
+                    }
+                }
+            }
+            else {
+                allResults.addAll(possibleWords);
+            }
+        }
+        return allResults;
+    }
+
+    public static <T> ArrayList<T> removeDupes(ArrayList<T> list) {
+        Set<T> set = new LinkedHashSet<>(list);
+        list.clear();
+        list.addAll(set);
+        return list;
     }
 
     public ArrayList<ArrayList<ArrayList<String>>> getWordList() {

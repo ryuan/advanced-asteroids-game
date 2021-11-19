@@ -18,7 +18,6 @@ public class Driver {
 
         Recursive combo = new Recursive(dictionary);
         int[] input = {5, 2, 8, 2};
-        combo.combinations(input);
-        System.out.println(combo.getWordList());
+        System.out.println(combo.combinations(input));
     }
 }
