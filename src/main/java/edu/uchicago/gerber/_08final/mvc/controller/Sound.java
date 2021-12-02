@@ -2,7 +2,9 @@ package edu.uchicago.gerber._08final.mvc.controller;
 
 
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
@@ -21,9 +23,9 @@ public class Sound {
 	        try {
 	          Clip clp = AudioSystem.getClip();
 
-	          AudioInputStream aisStream = 
-	        		  AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream("/sounds/" + strPath));
-     
+				InputStream audioSrc = Sound.class.getResourceAsStream("/sounds/" + strPath);
+				InputStream bufferedIn = new BufferedInputStream(audioSrc);
+				AudioInputStream aisStream = AudioSystem.getAudioInputStream(bufferedIn);
 	          
 	          clp.open(aisStream);
 	          clp.start(); 
@@ -38,34 +40,21 @@ public class Sound {
 	//for looping wav clips
 	//http://stackoverflow.com/questions/4875080/music-loop-in-java
 	public static Clip clipForLoopFactory(String strPath){
-		
+
 		Clip clp = null;
-		
-		// this line caused the original exceptions
-		
 		try {
-			AudioInputStream aisStream = 
-					  AudioSystem.getAudioInputStream(Sound.class.getResourceAsStream("/sounds/" + strPath));
+			InputStream audioSrc = Sound.class.getResourceAsStream("/sounds/" + strPath);
+			InputStream bufferedIn = new BufferedInputStream(audioSrc);
+			AudioInputStream aisStream = AudioSystem.getAudioInputStream(bufferedIn);
 			clp = AudioSystem.getClip();
 		    clp.open( aisStream );
-				
-		} catch (UnsupportedAudioFileException exp) {
-			
+
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException exp) {
 			exp.printStackTrace();
-		} catch (IOException exp) {
-			
-			exp.printStackTrace();
-		} catch (LineUnavailableException exp) {
-			
-			exp.printStackTrace();
-			
-		//the next three lines were added to catch all exceptions generated
-		}catch(Exception exp){
-			System.out.println("error");
-		}
-		
+		} //the next three lines were added to catch all exceptions generated
+
 		return clp;
-		
+
 	}
 	
 	

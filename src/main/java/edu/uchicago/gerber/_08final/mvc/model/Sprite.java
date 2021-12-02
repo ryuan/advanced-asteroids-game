@@ -3,309 +3,212 @@ package edu.uchicago.gerber._08final.mvc.model;
 import edu.uchicago.gerber._08final.mvc.controller.Game;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import lombok.Data;
+import lombok.experimental.Tolerate;
 
+//the lombok @Data gives us automatic getters and setters on all members
+@Data
 public abstract class Sprite implements Movable {
 	//the center-point of this sprite
-	private Point pntCenter;
+	private Point center;
 	//this causes movement; change in x and change in y
-	private double dDeltaX, dDeltaY;
-	//every sprite needs to know about the size of the gaming environ
-	private Dimension dim; //dim of the gaming environment
+	private double deltaX, deltaY;
 
-	//we need to know what team we're on
-	private Team mTeam;
+	//every sprite has a team: friend, foe, floater, or debris.
+	private Team team;
+	//the radius of circumscribing circle
+	private int radius;
 
-	//the radius of circumscibing circle
-	private int nRadius;
-
-	private int nOrientation;
-	private int nExpiry; //natural mortality (short-living objects)
+	//orientation from 0-359
+	private int orientation;
+	private int expiry; //natural mortality (short-living objects)
 	//the color of this sprite
-	private Color col;
+	private Color color;
 
-	//radial coordinates
-	//this game uses radial coordinates to render sprites
-	public double[] dLengths;
-	public double[] dDegrees;
-	
+	//some sprites spin, such as floaters and asteroids
+	private int spin;
 
-	//fade value for fading in and out
-	private int nFade;
+	//use for fade-in/fade-out
+	private int fade;
 
-	//these are used to draw the polygon. You don't usually need to interface with these
-	private Point[] pntCoords; //an array of points used to draw polygon
-	private int[] nXCoords;
-	private int[] nYCoords;
+	//these are Cartesian points used to draw the polygon.
+	private Point[] cartesians;
 
+	protected void expire(){
+		if (getExpiry() == 0)
+			CommandCenter.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
+		else
+			setExpiry(getExpiry() - 1);
+	}
 
 	@Override
-	public Team getTeam() {
-		//default
-	  return mTeam;
-	}
-
-	public void setTeam(Team team){
-		mTeam = team;
-	}
-
 	public void move() {
 
 		Point pnt = getCenter();
-		double dX = pnt.x + getDeltaX();
-		double dY = pnt.y + getDeltaY();
+		double newXPos = pnt.x + getDeltaX();
+		double newYPos = pnt.y + getDeltaY();
 		
-		//this just keeps the sprite inside the bounds of the frame
-		if (pnt.x > getDim().width) {
+		//the following code block just keeps the sprite inside the bounds of the frame
+		//to ensure this behavior among all sprites in your game, make sure to call super.maove() in extending classes.
+		if (pnt.x > Game.DIM.width) {
 			setCenter(new Point(1, pnt.y));
 
 		} else if (pnt.x < 0) {
-			setCenter(new Point(getDim().width - 1, pnt.y));
-		} else if (pnt.y > getDim().height) {
+			setCenter(new Point(Game.DIM.width - 1, pnt.y));
+		} else if (pnt.y > Game.DIM.height) {
 			setCenter(new Point(pnt.x, 1));
 
 		} else if (pnt.y < 0) {
-			setCenter(new Point(pnt.x, getDim().height - 1));
+			setCenter(new Point(pnt.x, Game.DIM.height - 1));
 		} else {
 
-			setCenter(new Point((int) dX, (int) dY));
+			setCenter(new Point((int) newXPos, (int) newYPos));
 		}
 
 	}
 
 	public Sprite() {
 
-	//you can override this and many more in the subclasses
-		setDim(Game.DIM);
+		//default sprite color
 		setColor(Color.white);
+		//place the sprite at some random location in the frame at instantiation
 		setCenter(new Point(Game.R.nextInt(Game.DIM.width),
 				Game.R.nextInt(Game.DIM.height)));
 
 
 	}
 
-	public void setExpire(int n) {
-		nExpiry = n;
-
-	}
-
-	public double[] getLengths() {
-		return this.dLengths;
-	}
-
-	public void setLengths(double[] dLengths) {
-		this.dLengths = dLengths;
-	}
-
-	public double[] getDegrees() {
-		return this.dDegrees;
-	}
-
-	public void setDegrees(double[] dDegrees) {
-		this.dDegrees = dDegrees;
-	}
-
-	public Color getColor() {
-		return col;
-	}
-
-	public void setColor(Color col) {
-		this.col = col;
-
-	}
-
-	public int points() {
-		//default is zero
-		return 0;
-	}
-
-	public int getExpire() {
-		return nExpiry;
-	}
-
-	public int getOrientation() {
-		return nOrientation;
-	}
-
-	public void setOrientation(int n) {
-		nOrientation = n;
-	}
-
-	public void setDeltaX(double dSet) {
-		dDeltaX = dSet;
-	}
-
-	public void setDeltaY(double dSet) {
-		dDeltaY = dSet;
-	}
-
-	public double getDeltaY() {
-		return dDeltaY;
-	}
-
-	public double getDeltaX() {
-		return dDeltaX;
-	}
-
-	public int getRadius() {
-		return nRadius;
-	}
-
-	public void setRadius(int n) {
-		nRadius = n;
-
-	}
-
-	public Dimension getDim() {
-		return dim;
-	}
-
-	public void setDim(Dimension dim) {
-		this.dim = dim;
-	}
-
-	public Point getCenter() {
-		return pntCenter;
-	}
-
-	public void setCenter(Point pntParam) {
-		pntCenter = pntParam;
-	}
-
-
-	public void setYcoord(int nValue, int nIndex) {
-		nYCoords[nIndex] = nValue;
-	}
-
-	public void setXcoord(int nValue, int nIndex) {
-		nXCoords[nIndex] = nValue;
-	}
-	
-	
-	public int getYcoord( int nIndex) {
-		return nYCoords[nIndex];// = nValue;
-	}
-
-	public int getXcoord( int nIndex) {
-		return nXCoords[nIndex];// = nValue;
-	}
-	
-	
-
-	public int[] getXcoords() {
-		return nXCoords;
-	}
-
-	public int[] getYcoords() {
-		return nYCoords;
-	}
-	
-	
-	public void setXcoords( int[] nCoords) {
-		 nXCoords = nCoords;
-	}
-
-	public void setYcoords(int[] nCoords) {
-		 nYCoords =nCoords;
-	}
-
-	protected double hypot(double dX, double dY) {
+	protected double hypotFunction(double dX, double dY) {
 		return Math.sqrt(Math.pow(dX, 2) + Math.pow(dY, 2));
 	}
 
-	
-	//utility function to convert from cartesian to polar
-	//since it's much easier to describe a sprite as a list of cartesean points
-	//sprites (except Asteroid) should use the cartesean technique to describe the coordinates
-	//see Falcon or Bullet constructor for examples
-	protected double[] convertToPolarDegs(ArrayList<Point> pntPoints) {
-
-	   double[] dDegs = new double[pntPoints.size()];
-
-		int nC = 0;
-		for (Point pnt : pntPoints) {
-			dDegs[nC++]=(Math.toDegrees(Math.atan2(pnt.y, pnt.x))) * Math.PI / 180 ;
-		}
-		return dDegs;
+	protected int somePosNegValue(int seed) {
+		int randomNumber = Game.R.nextInt(seed);
+		if (randomNumber % 2 == 0)
+			randomNumber = -randomNumber;
+		return randomNumber;
 	}
-	//utility function to convert to polar
-	protected double[] convertToPolarLens(ArrayList<Point> pntPoints) {
 
-		double[] dLens = new double[pntPoints.size()];
+	@Override
+	public boolean isProtected() {
+		//by default, sprites are not protected
+		return false;
+	}
+
+	//certain Sprites, such as Asteroid use this
+	protected Point[] polarToCartesian(List<PolarPoint> polPolars) {
+
+		//when casting from double to int, we truncate and lose precision, so best to be generous
+		final int PRECISION_MULTIPLIER = 1000;
+		Function<PolarPoint, Point> polarToCartFunction = pp ->  new Point(
+				(int) (getCenter().x + pp.getR() * getRadius() * PRECISION_MULTIPLIER
+						* Math.sin(Math.toRadians(getOrientation())
+						+ pp.getTheta())),
+				(int) (getCenter().y - pp.getR() * getRadius() * PRECISION_MULTIPLIER
+						* Math.cos(Math.toRadians(getOrientation())
+						+ pp.getTheta())));
+
+		return polPolars.stream()
+				.map(polarToCartFunction)
+				.toArray(Point[]::new);
+
+	}
+
+	protected List<PolarPoint> cartesianToPolar(List<Point> pntCartesians){
 
 		//determine the largest hypotenuse
-		double dL = 0;
-		for (Point pnt : pntPoints)
-			if (hypot(pnt.x, pnt.y) > dL)
-				dL = hypot(pnt.x, pnt.y);
+		double largestHypotenuse = 0;
+		for (Point pnt : pntCartesians)
+			if (hypotFunction(pnt.x, pnt.y) > largestHypotenuse)
+				largestHypotenuse = hypotFunction(pnt.x, pnt.y);
 
-		int nC = 0;
-		for (Point pnt : pntPoints) {
-			if (pnt.x == 0 && pnt.y > 0) {
-				dLens[nC] = hypot(pnt.x, pnt.y) / dL;
-			} else if (pnt.x < 0 && pnt.y > 0) {
-				dLens[nC] = hypot(pnt.x, pnt.y) / dL;
-			} else {
-				dLens[nC] = hypot(pnt.x, pnt.y) / dL;
-			}
-			nC++;
-		}
 
-		// holds <thetas, lens>
-		return dLens;
+		BiFunction<Point, Double, PolarPoint> pointDoublePolarPointBiFunction = (pnt, dub) -> new PolarPoint(
+				//this is r from PolarPoint(r,theta).
+				hypotFunction(pnt.x, pnt.y) / dub, //r is relative to the largestHypotenuse a.k.a. dub in this method
+				//this is theta from PolarPoint(r,theta)
+				Math.toDegrees(Math.atan2(pnt.y, pnt.x)) * Math.PI / 180
+		);
+
+		//we must make hypotenuse final to pass into a stream.
+		final double hyp = largestHypotenuse;
+
+
+		return pntCartesians.stream()
+		     .map(pnt -> pointDoublePolarPointBiFunction.apply(pnt, hyp))
+			 .collect(Collectors.toList());
 
 	}
 
-	protected void assignPolarPoints(ArrayList<Point> pntCs) {
-		setDegrees(convertToPolarDegs(pntCs));
-		setLengths(convertToPolarLens(pntCs));
+
+	public void draw(Graphics g, Color color) {
+		//set custom color
+		g.setColor(color);
+		render(g);
 
 	}
 
 	@Override
     public void draw(Graphics g) {
-        nXCoords = new int[dDegrees.length];
-        nYCoords = new int[dDegrees.length];
-        //need this as well
-        pntCoords = new Point[dDegrees.length];
-        
-
-        for (int nC = 0; nC < dDegrees.length; nC++) {
-            nXCoords[nC] =    (int) (getCenter().x + getRadius() 
-                            * dLengths[nC] 
-                            * Math.sin(Math.toRadians(getOrientation()) + dDegrees[nC]));
-            nYCoords[nC] =    (int) (getCenter().y - getRadius()
-                            * dLengths[nC]
-                            * Math.cos(Math.toRadians(getOrientation()) + dDegrees[nC]));
-            
-            
-            //need this line of code to create the points which we will need for debris
-            pntCoords[nC] = new Point(nXCoords[nC], nYCoords[nC]);
-        }
-
+		//set the native color of the sprite
         g.setColor(getColor());
-        g.drawPolygon(getXcoords(), getYcoords(), dDegrees.length);
-    }
-    
+		render(g);
 
-	public Point[] getObjectPoints() {
-		return pntCoords;
-	}
-	
-	public void setObjectPoints(Point[] pntPs) {
-		 pntCoords = pntPs;
-	}
-	
-	public void setObjectPoint(Point pnt, int nIndex) {
-		 pntCoords[nIndex] = pnt;
 	}
 
-	public int getFadeValue() {
-		return nFade;
+	private void render(Graphics g) {
+
+		//to render this Sprite, we need to, 1: convert cartesians to polars, 2: adjust the polar coords
+		// by adjusting for both the center and orientation of sprite. 3: convert back to cartesians.
+		List<PolarPoint> polars = cartesianToPolar(Arrays.asList(getCartesians()));
+
+		Function<PolarPoint,Point> adjustPointFunction =
+				pp -> new Point(
+				(int) (getCenter().x + pp.getR() * getRadius()
+						* Math.sin(Math.toRadians(getOrientation())
+						+ pp.getTheta())),
+
+				(int) (getCenter().y - pp.getR() * getRadius()
+						* Math.cos(Math.toRadians(getOrientation())
+						+ pp.getTheta())));
+
+
+		g.drawPolygon(
+				polars.stream()
+						.map(adjustPointFunction)
+						.map(pnt -> pnt.x)
+						.mapToInt(Integer::intValue)
+						.toArray(),
+
+				polars.stream()
+						.map(adjustPointFunction)
+						.map(pnt -> pnt.y)
+						.mapToInt(Integer::intValue)
+						.toArray(),
+
+				getCartesians().length);
+
+		//for debugging center-point. Feel free to remove these two lines.
+		//#########################################
+		g.setColor(Color.ORANGE);
+		g.fillOval(getCenter().x -1, getCenter().y -1, 2,2);
+		//g.drawOval(getCenter().x - getRadius(), getCenter().y - getRadius(), getRadius() *2, getRadius() *2);
+		//#########################################
 	}
 
-	public void setFadeValue(int n) {
-		nFade = n;
+
+	//in order to overload a lombok'ed method, we need to use the @Tolerate annotation
+	@Tolerate
+	public void setCartesians(List<Point> pntPs) {
+		setCartesians(pntPs.stream()
+				.toArray(Point[]::new));
+
 	}
+
 
 }

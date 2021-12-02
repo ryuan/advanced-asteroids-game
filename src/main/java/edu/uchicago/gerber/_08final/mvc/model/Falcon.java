@@ -4,6 +4,9 @@ import edu.uchicago.gerber._08final.mvc.controller.Game;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 
 public class Falcon extends Sprite {
@@ -14,27 +17,16 @@ public class Falcon extends Sprite {
 	
 	private final double THRUST = .65;
 
-	final int DEGREE_STEP = 7;
+	final int DEGREE_STEP = 9;
+	//must be multiple of 3
+	public static final int FADE_INITIAL_VALUE = 51;
 	
-	private boolean bShield = false;
-	private boolean bFlame = false;
-	private boolean bProtected; //for fade in and out
-	
-	private boolean bThrusting = false;
-	private boolean bTurningRight = false;
-	private boolean bTurningLeft = false;
-	
-	private int nShield;
-			
-	private final double[] FLAME = { 23 * Math.PI / 24 + Math.PI / 2,
-			Math.PI + Math.PI / 2, 25 * Math.PI / 24 + Math.PI / 2 };
+	//private boolean shield = false;
+	private boolean thrusting = false;
+	private boolean turningRight = false;
+	private boolean turningLeft = false;
 
-	private int[] nXFlames = new int[FLAME.length];
-	private int[] nYFlames = new int[FLAME.length];
 
-	private Point[] pntFlames = new Point[FLAME.length];
-
-	
 	// ==============================================================
 	// CONSTRUCTOR 
 	// ==============================================================
@@ -42,8 +34,24 @@ public class Falcon extends Sprite {
 	public Falcon() {
 		super();
 		setTeam(Team.FRIEND);
-		ArrayList<Point> pntCs = new ArrayList<Point>();
+
+
+		setColor(Color.white);
 		
+		//put falcon in the middle.
+		setCenter(new Point(Game.DIM.width / 2, Game.DIM.height / 2));
+		
+		//with random orientation
+		setOrientation(Game.R.nextInt(360));
+		
+		//this is the size (radius) of the falcon
+		setRadius(35);
+
+		//Falcon uses fade.
+		setFade(FADE_INITIAL_VALUE);
+
+		//be sure to set cartesian points last.
+		List<Point> pntCs = new ArrayList<>();
 		// Robert Alef's awesome falcon design
 		pntCs.add(new Point(0,9));
 		pntCs.add(new Point(-1, 6));
@@ -81,178 +89,152 @@ public class Falcon extends Sprite {
 		pntCs.add(new Point(1, -2));
 		pntCs.add(new Point(4,-2));
 
-
 		pntCs.add(new Point(4, 1));
 		pntCs.add(new Point(1, 3));
 		pntCs.add(new Point(1,6));
 		pntCs.add(new Point(0,9));
 
-		assignPolarPoints(pntCs);
-
-		setColor(Color.white);
-		
-		//put falcon in the middle.
-		setCenter(new Point(Game.DIM.width / 2, Game.DIM.height / 2));
-		
-		//with random orientation
-		setOrientation(Game.R.nextInt(360));
-		
-		//this is the size of the falcon
-		setRadius(35);
-
-		//these are falcon specific
-		setProtected(true);
-		setFadeValue(0);
+		setCartesians(pntCs);
 	}
-	
-	
+
+	@Override
+	public boolean isProtected() {
+		return getFade() != 255;
+	}
+
 	// ==============================================================
 	// METHODS 
 	// ==============================================================
 	@Override
 	public void move() {
 		super.move();
-		if (bThrusting) {
-			bFlame = true;
-			double dAdjustX = Math.cos(Math.toRadians(getOrientation()))
-					* THRUST;
-			double dAdjustY = Math.sin(Math.toRadians(getOrientation()))
-					* THRUST;
-			setDeltaX(getDeltaX() + dAdjustX);
-			setDeltaY(getDeltaY() + dAdjustY);
-		}
-		if (bTurningLeft) {
 
-			if (getOrientation() <= 0 && bTurningLeft) {
+		if (isProtected()) {
+			setFade(getFade() + 3);
+		}
+
+		//apply some thrust vectors using trig.
+		if (thrusting) {
+			double adjustX = Math.cos(Math.toRadians(getOrientation()))
+					* THRUST;
+			double adjustY = Math.sin(Math.toRadians(getOrientation()))
+					* THRUST;
+			setDeltaX(getDeltaX() + adjustX);
+			setDeltaY(getDeltaY() + adjustY);
+		}
+		//rotate left
+		if (turningLeft) {
+			if (getOrientation() <= 0) {
 				setOrientation(360);
 			}
 			setOrientation(getOrientation() - DEGREE_STEP);
-		} 
-		if (bTurningRight) {
-			if (getOrientation() >= 360 && bTurningRight) {
+		}
+		//rotate right
+		if (turningRight) {
+			if (getOrientation() >= 360) {
 				setOrientation(0);
 			}
 			setOrientation(getOrientation() + DEGREE_STEP);
 		}
 
-
-		//implementing the fadeInOut functionality - added by Dmitriy
-		if (getProtected()) {
-			setFadeValue(getFadeValue() + 3);
-		}
-		if (getFadeValue() == 255) {
-			setProtected(false);
-		}
-
-
-
 	} //end move
 
+
+
+	//methods for moving the falcon
 	public void rotateLeft() {
-		bTurningLeft = true;
+		turningLeft = true;
 	}
 
 	public void rotateRight() {
-		bTurningRight = true;
+		turningRight = true;
 	}
 
 	public void stopRotating() {
-		bTurningRight = false;
-		bTurningLeft = false;
+		turningRight = false;
+		turningLeft = false;
 	}
 
 	public void thrustOn() {
-		bThrusting = true;
+		thrusting = true;
 	}
 
 	public void thrustOff() {
-		bThrusting = false;
-		bFlame = false;
+		thrusting = false;
 	}
 
-	private int adjustColor(int nCol, int nAdj) {
-		if (nCol - nAdj <= 0) {
-			return 0;
-		} else {
-			return nCol - nAdj;
-		}
+
+
+	private int adjustColor(int colorNum, int adjust) {
+		return Math.max(colorNum - adjust, 0);
 	}
 
 	@Override
 	public void draw(Graphics g) {
 
-		//does the fading at the beginning or after hyperspace
 		Color colShip;
-		if (getFadeValue() == 255) {
+		if (getFade() == 255) {
 			colShip = Color.white;
 		} else {
-			colShip = new Color(adjustColor(getFadeValue(), 200), adjustColor(
-					getFadeValue(), 175), getFadeValue());
+			colShip = new Color(
+
+					adjustColor(getFade(), 200), //red
+					adjustColor(getFade(), 175), //green
+					getFade() //blue
+			);
 		}
 
-
+		//most Sprites do not have flames, but Falcon does
+		 double[] flames = { 23 * Math.PI / 24 + Math.PI / 2, Math.PI + Math.PI / 2, 25 * Math.PI / 24 + Math.PI / 2 };
+		 Point[] pntFlames = new Point[flames.length];
 
 		//thrusting
-		if (bFlame) {
+		if (thrusting) {
 			g.setColor(colShip);
 			//the flame
-			for (int nC = 0; nC < FLAME.length; nC++) {
+			for (int nC = 0; nC < flames.length; nC++) {
 				if (nC % 2 != 0) //odd
 				{
+					//adjust the position so that the flame is off-center
 					pntFlames[nC] = new Point((int) (getCenter().x + 2
 							* getRadius()
 							* Math.sin(Math.toRadians(getOrientation())
-									+ FLAME[nC])), (int) (getCenter().y - 2
+									+ flames[nC])), (int) (getCenter().y - 2
 							* getRadius()
 							* Math.cos(Math.toRadians(getOrientation())
-									+ FLAME[nC])));
+									+ flames[nC])));
 
 				} else //even
 				{
 					pntFlames[nC] = new Point((int) (getCenter().x + getRadius()
 							* 1.1
 							* Math.sin(Math.toRadians(getOrientation())
-									+ FLAME[nC])),
+									+ flames[nC])),
 							(int) (getCenter().y - getRadius()
 									* 1.1
 									* Math.cos(Math.toRadians(getOrientation())
-											+ FLAME[nC])));
+											+ flames[nC])));
 
 				} //end even/odd else
-
 			} //end for loop
 
-			for (int nC = 0; nC < FLAME.length; nC++) {
-				nXFlames[nC] = pntFlames[nC].x;
-				nYFlames[nC] = pntFlames[nC].y;
+			g.fillPolygon(
+					Arrays.stream(pntFlames)
+							.map(pnt -> pnt.x)
+							.mapToInt(Integer::intValue)
+							.toArray(),
 
-			} //end assign flame points
+					Arrays.stream(pntFlames)
+							.map(pnt -> pnt.y)
+							.mapToInt(Integer::intValue)
+							.toArray(),
 
-			//g.setColor( Color.white );
-			g.fillPolygon(nXFlames, nYFlames, FLAME.length);
+					flames.length);
 
 		} //end if flame
 
-		drawShipWithColor(g, colShip);
+		draw(g,colShip);
 
 	} //end draw()
 
-	public void drawShipWithColor(Graphics g, Color col) {
-		super.draw(g);
-		g.setColor(col);
-		g.drawPolygon(getXcoords(), getYcoords(), dDegrees.length);
-	}
-
-
-	public void setProtected(boolean bParam) {
-		if (bParam) {
-			setFadeValue(0);
-		}
-		bProtected = bParam;
-	}
-
-
-	public boolean getProtected() {return bProtected;}
-
-	
 } //end class

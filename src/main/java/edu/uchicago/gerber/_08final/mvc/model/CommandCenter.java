@@ -3,35 +3,38 @@ package edu.uchicago.gerber._08final.mvc.model;
 
 
 import edu.uchicago.gerber._08final.mvc.controller.Sound;
+import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-
+//the lombok @Data gives us automatic getters and setters on all members
+@Data
 public class CommandCenter {
 
-	private  int nNumFalcon;
-	private  int nLevel;
-	private  long lScore;
-	private  Falcon falShip;
-	private  boolean bPlaying;
-	private  boolean bPaused;
-	
-	// These ArrayLists with capacities set
-	private List<Movable> movDebris = new ArrayList<Movable>(300);
-	private List<Movable> movFriends = new ArrayList<Movable>(100);
-	private List<Movable> movFoes = new ArrayList<Movable>(200);
-	private List<Movable> movFloaters = new ArrayList<Movable>(50);
+	private  int numFalcons;
+	private  int level;
+	private  long score;
+	//the falcon is located in the movFriends list, but since we use this reference a lot, we keep track of it in a
+	//separate reference. See spawnFalcon() method below.
+	private  Falcon falcon;
+	private  boolean paused;
+
+	private List<Movable> movDebris = new LinkedList<>();
+	private List<Movable> movFriends = new LinkedList<>();
+	private List<Movable> movFoes = new LinkedList<>();
+	private List<Movable> movFloaters = new LinkedList<>();
 
 	private GameOpsList opsList = new GameOpsList();
 
 
 	private static CommandCenter instance = null;
 
-	// Constructor made private - static Utility class only
+	// Constructor made private
 	private CommandCenter() {}
 
-
+    //this class maintains game state - make this a singleton.
 	public static CommandCenter getInstance(){
 		if (instance == null){
 			instance = new CommandCenter();
@@ -43,31 +46,24 @@ public class CommandCenter {
 	public  void initGame(){
 		setLevel(1);
 		setScore(0);
-		setNumFalcons(3);
-		spawnFalcon(true);
+		setNumFalcons(4);
+		spawnFalcon();
 	}
-	
-	// The parameter is true if this is for the beginning of the game, otherwise false
-	// When you spawn a new falcon, you need to decrement its number
-	public  void spawnFalcon(boolean bFirst) {
-		if (getNumFalcons() != 0) {
-			falShip = new Falcon();
 
-			opsList.enqueue(falShip, CollisionOp.Operation.ADD);
-			if (!bFirst)
-			    setNumFalcons(getNumFalcons() - 1);
-		}
-		
+	public  boolean isGameOver() {		//if the number of falcons is zero, then game over
+		return getNumFalcons() == 0;
+	}
+
+	public  void spawnFalcon() {
+
+		//decrement the number of falcons first
+		setNumFalcons(getNumFalcons() - 1);
+		if (isGameOver()) return;
+
+		falcon = new Falcon();
+		opsList.enqueue(falcon, CollisionOp.Operation.ADD);
 		Sound.playSound("shipspawn.wav");
 
-	}
-
-	public GameOpsList getOpsList() {
-		return opsList;
-	}
-
-	public void setOpsList(GameOpsList opsList) {
-		this.opsList = opsList;
 	}
 
 	public  void clearAll(){
@@ -77,81 +73,8 @@ public class CommandCenter {
 		movFloaters.clear();
 	}
 
-	public  boolean isPlaying() {
-		return bPlaying;
-	}
-
-	public  void setPlaying(boolean bPlaying) {
-		this.bPlaying = bPlaying;
-	}
-
-	public  boolean isPaused() {
-		return bPaused;
-	}
-
-	public  void setPaused(boolean bPaused) {
-		this.bPaused = bPaused;
-	}
-	
-	public  boolean isGameOver() {		//if the number of falcons is zero, then game over
-		if (getNumFalcons() == 0) {
-			return true;
-		}
-		return false;
-	}
-
-	public  int getLevel() {
-		return nLevel;
-	}
-
-	public   long getScore() {
-		return lScore;
-	}
-
-	public  void setScore(long lParam) {
-		lScore = lParam;
-	}
-
-	public  void setLevel(int n) {
-		nLevel = n;
-	}
-
-	public  int getNumFalcons() {
-		return nNumFalcon;
-	}
-
-	public  void setNumFalcons(int nParam) {
-		nNumFalcon = nParam;
-	}
-	
-	public  Falcon getFalcon(){
-		return falShip;
-	}
-	
-	public  void setFalcon(Falcon falParam){
-		falShip = falParam;
-	}
-
-	public  List<Movable> getMovDebris() {
-		return movDebris;
-	}
 
 
-
-	public  List<Movable> getMovFriends() {
-		return movFriends;
-	}
-
-
-
-	public  List<Movable> getMovFoes() {
-		return movFoes;
-	}
-
-
-	public  List<Movable> getMovFloaters() {
-		return movFloaters;
-	}
 
 
 

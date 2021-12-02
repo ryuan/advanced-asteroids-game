@@ -22,14 +22,19 @@ public class Game implements Runnable, KeyListener {
 
 	public static final Dimension DIM = new Dimension(1100, 900); //the dimension of the game.
 	private GamePanel gmpPanel;
+	//this is used throughout many classes.
 	public static Random R = new Random();
-	public final static int ANI_DELAY = 45; // milliseconds between screen
-											// updates (animation)
-	private Thread thrAnim;
-	private int nLevel = 1;
-	private int nTick = 0;
 
-	private boolean bMuted = true;
+	public final static int ANI_DELAY = 50; // milliseconds between screen
+											// updates (animation)
+
+	public final static int FRAMES_PER_SECOND = 1000 / ANI_DELAY;
+
+	private Thread animationThread;
+	private int level = 1;
+
+
+	private boolean muted = true;
 	
 
 	private final int PAUSE = 80, // p key
@@ -50,7 +55,8 @@ public class Game implements Runnable, KeyListener {
 	private Clip clpThrust;
 	private Clip clpMusicBackground;
 
-	private static final int SPAWN_NEW_SHIP_FLOATER = 1200;
+	//spawn every 30 seconds
+	private static final int SPAWN_NEW_SHIP_FLOATER = FRAMES_PER_SECOND * 30;
 
 
 
@@ -73,6 +79,7 @@ public class Game implements Runnable, KeyListener {
 	// ===============================================
 
 	public static void main(String args[]) {
+		//typical Swing application main method
 		EventQueue.invokeLater(new Runnable() { // uses the Event dispatch thread from Java 5 (refactored)
 					public void run() {
 						try {
@@ -87,9 +94,9 @@ public class Game implements Runnable, KeyListener {
 	}
 
 	private void fireUpAnimThread() { // called initially
-		if (thrAnim == null) {
-			thrAnim = new Thread(this); // pass the thread a runnable object (this)
-			thrAnim.start();
+		if (animationThread == null) {
+			animationThread = new Thread(this); // pass the thread a runnable object (this)
+			animationThread.start();
 		}
 	}
 
@@ -98,93 +105,78 @@ public class Game implements Runnable, KeyListener {
 
 		// lower this thread's priority; let the "main" aka 'Event Dispatch'
 		// thread do what it needs to do first
-		thrAnim.setPriority(Thread.MIN_PRIORITY);
+		animationThread.setPriority(Thread.MIN_PRIORITY);
 
 		// and get the current time
 		long lStartTime = System.currentTimeMillis();
 
 		// this thread animates the scene
-		while (Thread.currentThread() == thrAnim) {
-			tick();
-			spawnNewShipFloater();
-			gmpPanel.update(gmpPanel.getGraphics()); // update takes the graphics context we must 
-														// surround the sleep() in a try/catch block
-														// this simply controls delay time between 
-														// the frames of the animation
+		while (Thread.currentThread() == animationThread) {
 
-			//this might be a good place to check for collisions
+			gmpPanel.update(gmpPanel.getGraphics()); // see GamePanel class
 			checkCollisions();
-			//this might be a god place to check if the level is clear (no more foes)
-			//if the level is clear then spawn some big asteroids -- the number of asteroids 
-			//should increase with the level. 
 			checkNewLevel();
+			spawnNewShipFloater();
 
+			// surround the sleep() in a try/catch block
+			// this simply controls delay time between
+			// the frames of the animation
 			try {
 				// The total amount of time is guaranteed to be at least ANI_DELAY long.  If processing (update) 
 				// between frames takes longer than ANI_DELAY, then the difference between lStartTime - 
 				// System.currentTimeMillis() will be negative, then zero will be the sleep time
 				lStartTime += ANI_DELAY;
+
 				Thread.sleep(Math.max(0,
 						lStartTime - System.currentTimeMillis()));
 			} catch (InterruptedException e) {
-				// just skip this frame -- no big deal
-				continue;
+				// do nothing (bury the exception), and just continue, e.g. skip this frame -- no big deal
 			}
 		} // end while
 	} // end run
 
 	private void checkCollisions() {
 
-		
-
 		Point pntFriendCenter, pntFoeCenter;
-		int nFriendRadiux, nFoeRadiux;
+		int radFriend, radFoe;
 
+		//This has order-of-growth of O(n^2), there is no way around this.
 		for (Movable movFriend : CommandCenter.getInstance().getMovFriends()) {
 			for (Movable movFoe : CommandCenter.getInstance().getMovFoes()) {
 
 				pntFriendCenter = movFriend.getCenter();
 				pntFoeCenter = movFoe.getCenter();
-				nFriendRadiux = movFriend.getRadius();
-				nFoeRadiux = movFoe.getRadius();
+				radFriend = movFriend.getRadius();
+				radFoe = movFoe.getRadius();
 
 				//detect collision
-				if (pntFriendCenter.distance(pntFoeCenter) < (nFriendRadiux + nFoeRadiux)) {
-
-					//falcon
-					if ((movFriend instanceof Falcon) ){
-						if (!CommandCenter.getInstance().getFalcon().getProtected()){
-							CommandCenter.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
-							CommandCenter.getInstance().spawnFalcon(false);
-
-						}
-					}
-					//not the falcon
-					else {
+				if (pntFriendCenter.distance(pntFoeCenter) < (radFriend + radFoe)) {
+					//remove the friend (so long as he is not protected)
+					if (!movFriend.isProtected()){
 						CommandCenter.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
-					}//end else
-					//kill the foe and if asteroid, then spawn new asteroids
-					killFoe(movFoe);
+					}
+					//remove the foe
+					CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
 					Sound.playSound("kapow.wav");
+				 }
 
 				}//end if 
 			}//end inner for
-		}//end outer for
-
 
 		//check for collisions between falcon and floaters
 		if (CommandCenter.getInstance().getFalcon() != null){
+
 			Point pntFalCenter = CommandCenter.getInstance().getFalcon().getCenter();
-			int nFalRadiux = CommandCenter.getInstance().getFalcon().getRadius();
+			int radFalcon = CommandCenter.getInstance().getFalcon().getRadius();
+
 			Point pntFloaterCenter;
-			int nFloaterRadiux;
-			
+			int radFloater;
 			for (Movable movFloater : CommandCenter.getInstance().getMovFloaters()) {
 				pntFloaterCenter = movFloater.getCenter();
-				nFloaterRadiux = movFloater.getRadius();
+				radFloater = movFloater.getRadius();
 	
 				//detect collision
-				if (pntFalCenter.distance(pntFloaterCenter) < (nFalRadiux + nFloaterRadiux)) {
+				if (pntFalCenter.distance(pntFloaterCenter) < (radFalcon + radFloater)) {
 
 					CommandCenter.getInstance().getOpsList().enqueue(movFloater, CollisionOp.Operation.REMOVE);
 					Sound.playSound("pacman_eatghost.wav");
@@ -192,10 +184,15 @@ public class Game implements Runnable, KeyListener {
 				}//end if 
 			}//end inner for
 		}//end if not null
-		
 
+		processGameOpsQueue();
 
-		//we are dequeuing the opsList and performing operations in serial to avoid mutating the movable arraylists while iterating them above
+	}//end meth
+
+	private void processGameOpsQueue() {
+
+		//deferred mutation: these operations are done AFTER we have completed our collision detection to avoid
+		// mutating the movable linkedlists while iterating them above
 		while(!CommandCenter.getInstance().getOpsList().isEmpty()){
 			CollisionOp cop =  CommandCenter.getInstance().getOpsList().dequeue();
 			Movable mov = cop.getMovable();
@@ -207,6 +204,8 @@ public class Game implements Runnable, KeyListener {
 						CommandCenter.getInstance().getMovFoes().add(mov);
 					} else {
 						CommandCenter.getInstance().getMovFoes().remove(mov);
+						if (mov instanceof Asteroid)
+							spawnSmallerAsteroids((Asteroid) mov);
 					}
 
 					break;
@@ -215,6 +214,8 @@ public class Game implements Runnable, KeyListener {
 						CommandCenter.getInstance().getMovFriends().add(mov);
 					} else {
 						CommandCenter.getInstance().getMovFriends().remove(mov);
+						if (mov instanceof Falcon)
+							CommandCenter.getInstance().spawnFalcon();
 					}
 					break;
 
@@ -238,58 +239,34 @@ public class Game implements Runnable, KeyListener {
 			}
 
 		}
-		//a request to the JVM is made every frame to garbage collect, however, the JVM will choose when and how to do this
-		System.gc();
-		
-	}//end meth
+	}
 
-	private void killFoe(Movable movFoe) {
-		
-		if (movFoe instanceof Asteroid){
 
-			//we know this is an Asteroid, so we can cast without threat of ClassCastException
-			Asteroid astExploded = (Asteroid)movFoe;
+	private void spawnSmallerAsteroids(Asteroid originalAsteroid) {
+
 			//big asteroid 
-			if(astExploded.getSize() == 0){
+			if(originalAsteroid.getSize() == 0){
 				//spawn two medium Asteroids
-				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
-				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
+				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(originalAsteroid), CollisionOp.Operation.ADD);
+				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(originalAsteroid), CollisionOp.Operation.ADD);
 
 			} 
 			//medium size aseroid exploded
-			else if(astExploded.getSize() == 1){
+			else if(originalAsteroid.getSize() == 1){
 				//spawn three small Asteroids
-				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
-				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
-				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(astExploded), CollisionOp.Operation.ADD);
+				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(originalAsteroid), CollisionOp.Operation.ADD);
+				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(originalAsteroid), CollisionOp.Operation.ADD);
+				CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(originalAsteroid), CollisionOp.Operation.ADD);
 
 			}
 
-		} 
-
-		//remove the original Foe
-		CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
-
-	}
-
-	//some methods for timing events in the game,
-	//such as the appearance of UFOs, floaters (power-ups), etc. 
-	public void tick() {
-		if (nTick == Integer.MAX_VALUE)
-			nTick = 0;
-		else
-			nTick++;
-	}
-
-	public int getTick() {
-		return nTick;
+			//if it's a small asteroid, do nothing.
 	}
 
 	private void spawnNewShipFloater() {
-		//make the appearance of power-up dependent upon ticks and levels
-		//the higher the level the more frequent the appearance
-		if (nTick % (SPAWN_NEW_SHIP_FLOATER - nLevel * 7) == 0) {
-			//CommandCenter.getInstance().getMovFloaters().enqueue(new NewShipFloater());
+
+		//appears more often as your level increses.
+		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_NEW_SHIP_FLOATER - level * 7L) == 0) {
 			CommandCenter.getInstance().getOpsList().enqueue(new NewShipFloater(), CollisionOp.Operation.ADD);
 		}
 	}
@@ -299,15 +276,13 @@ public class Game implements Runnable, KeyListener {
 		CommandCenter.getInstance().clearAll();
 		CommandCenter.getInstance().initGame();
 		CommandCenter.getInstance().setLevel(0);
-		CommandCenter.getInstance().setPlaying(true);
 		CommandCenter.getInstance().setPaused(false);
-		//if (!bMuted)
-		   // clpMusicBackground.loop(Clip.LOOP_CONTINUOUSLY);
+
 	}
 
 	//this method spawns new asteroids
-	private void spawnAsteroids(int nNum) {
-		for (int nC = 0; nC < nNum; nC++) {
+	private void spawnBigAsteroids(int nNum) {
+		while(nNum-- > 0) {
 			//Asteroids with size of zero are big
 			CommandCenter.getInstance().getOpsList().enqueue(new Asteroid(0), CollisionOp.Operation.ADD);
 
@@ -317,27 +292,23 @@ public class Game implements Runnable, KeyListener {
 	
 	private boolean isLevelClear(){
 		//if there are no more Asteroids on the screen
-		boolean bAsteroidFree = true;
+		boolean asteroidFree = true;
 		for (Movable movFoe : CommandCenter.getInstance().getMovFoes()) {
 			if (movFoe instanceof Asteroid){
-				bAsteroidFree = false;
+				asteroidFree = false;
 				break;
 			}
 		}
-		
-		return bAsteroidFree;
-
-		
+		return asteroidFree;
 	}
 	
 	private void checkNewLevel(){
 		
-		if (isLevelClear() ){
-			if (CommandCenter.getInstance().getFalcon() !=null)
-				CommandCenter.getInstance().getFalcon().setProtected(true);
-			
-			spawnAsteroids(CommandCenter.getInstance().getLevel() + 2);
+		if (isLevelClear() && CommandCenter.getInstance().getFalcon() != null) {
+			//more asteroids at each level to increase difficulty
+			spawnBigAsteroids(CommandCenter.getInstance().getLevel() + 2);
 			CommandCenter.getInstance().setLevel(CommandCenter.getInstance().getLevel() + 1);
+			CommandCenter.getInstance().getFalcon().setFade(Falcon.FADE_INITIAL_VALUE);
 
 		}
 	}
@@ -360,9 +331,8 @@ public class Game implements Runnable, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		Falcon fal = CommandCenter.getInstance().getFalcon();
 		int nKey = e.getKeyCode();
-		// System.out.println(nKey);
 
-		if (nKey == START && !CommandCenter.getInstance().isPlaying())
+		if (nKey == START && CommandCenter.getInstance().isGameOver())
 			startGame();
 
 		if (fal != null) {
@@ -372,15 +342,14 @@ public class Game implements Runnable, KeyListener {
 				CommandCenter.getInstance().setPaused(!CommandCenter.getInstance().isPaused());
 				if (CommandCenter.getInstance().isPaused())
 					stopLoopingSounds(clpMusicBackground, clpThrust);
-				else
-					clpMusicBackground.loop(Clip.LOOP_CONTINUOUSLY);
+
 				break;
 			case QUIT:
 				System.exit(0);
 				break;
 			case UP:
 				fal.thrustOn();
-				if (!CommandCenter.getInstance().isPaused())
+				if (!CommandCenter.getInstance().isPaused() && !CommandCenter.getInstance().isGameOver())
 					clpThrust.loop(Clip.LOOP_CONTINUOUSLY);
 				break;
 			case LEFT:
@@ -405,6 +374,7 @@ public class Game implements Runnable, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		Falcon fal = CommandCenter.getInstance().getFalcon();
 		int nKey = e.getKeyCode();
+		//show the key-code in the console
 		 System.out.println(nKey);
 
 		if (fal != null) {
@@ -414,12 +384,7 @@ public class Game implements Runnable, KeyListener {
 				Sound.playSound("laser.wav");
 				break;
 				
-			//special is a special weapon, current it just fires the cruise missile. 
-			case SPECIAL:
-				CommandCenter.getInstance().getOpsList().enqueue(new Cruise(fal), CollisionOp.Operation.ADD);
-				//Sound.playSound("laser.wav");
-				break;
-				
+
 			case LEFT:
 				fal.stopRotating();
 				break;
@@ -432,16 +397,14 @@ public class Game implements Runnable, KeyListener {
 				break;
 				
 			case MUTE:
-				if (!bMuted){
+				if (!muted){
 					stopLoopingSounds(clpMusicBackground);
-					bMuted = !bMuted;
 				} 
 				else {
 					clpMusicBackground.loop(Clip.LOOP_CONTINUOUSLY);
-					bMuted = !bMuted;
 				}
+				muted = !muted;
 				break;
-				
 				
 			default:
 				break;
@@ -450,7 +413,7 @@ public class Game implements Runnable, KeyListener {
 	}
 
 	@Override
-	// Just need it b/c of KeyListener implementation
+	// does nothing, but we need it b/c of KeyListener contract
 	public void keyTyped(KeyEvent e) {
 	}
 
