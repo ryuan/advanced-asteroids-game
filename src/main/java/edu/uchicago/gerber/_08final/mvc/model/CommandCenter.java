@@ -5,6 +5,7 @@ package edu.uchicago.gerber._08final.mvc.model;
 import edu.uchicago.gerber._08final.mvc.controller.Sound;
 import lombok.Data;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,6 +21,11 @@ public class CommandCenter {
 	//separate reference. See spawnFalcon() method below.
 	private  Falcon falcon;
 	private  boolean paused;
+
+	private BufferedImage explosion1;
+	private BufferedImage explosion2;
+	private BufferedImage explosion3;
+	private BufferedImage explosion4;
 
 	private List<Movable> movDebris = new LinkedList<>();
 	private List<Movable> movFriends = new LinkedList<>();
@@ -72,8 +78,6 @@ public class CommandCenter {
 		movFoes.clear();
 		movFloaters.clear();
 	}
-
-
 
 
 

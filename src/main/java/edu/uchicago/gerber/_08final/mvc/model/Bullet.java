@@ -50,7 +50,6 @@ public class Bullet extends Sprite {
     public void move() {
         super.move();
         expire();
-
     }
 
 }

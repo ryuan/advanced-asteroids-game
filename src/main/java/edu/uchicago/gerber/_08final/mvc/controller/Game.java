@@ -152,16 +152,25 @@ public class Game implements Runnable, KeyListener {
 				//detect collision
 				if (pntFriendCenter.distance(pntFoeCenter) < (radFriend + radFoe)) {
 					//remove the friend (so long as he is not protected)
-					if (!movFriend.isProtected()){
+					if (!movFriend.isProtected()) {
 						CommandCenter.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
 					}
 					//remove the foe
 					CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
 					Sound.playSound("kapow.wav");
-				 }
 
-				}//end if 
-			}//end inner for
+					if (radFoe == 100) {
+						CommandCenter.getInstance().setScore(CommandCenter.getInstance().getScore() + 20);
+					} else if (radFoe == 50) {
+						CommandCenter.getInstance().setScore(CommandCenter.getInstance().getScore() + 50);
+					} else if (radFoe == 25) {
+						CommandCenter.getInstance().setScore(CommandCenter.getInstance().getScore() + 100);
+					}
+
+			 	}
+
+			}//end if
+		}//end inner for
 
 		//check for collisions between falcon and floaters
 		if (CommandCenter.getInstance().getFalcon() != null){
@@ -180,7 +189,8 @@ public class Game implements Runnable, KeyListener {
 
 					CommandCenter.getInstance().getOpsList().enqueue(movFloater, CollisionOp.Operation.REMOVE);
 					Sound.playSound("pacman_eatghost.wav");
-	
+
+					CommandCenter.getInstance().setNumFalcons(CommandCenter.getInstance().getNumFalcons() + 1);
 				}//end if 
 			}//end inner for
 		}//end if not null
