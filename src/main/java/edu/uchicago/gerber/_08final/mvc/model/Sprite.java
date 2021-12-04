@@ -42,6 +42,8 @@ public abstract class Sprite implements Movable {
 	//these are Cartesian points used to draw the polygon.
 	private Point[] cartesians;
 
+	private int spriteScore;
+
 	protected void expire(){
 		if (getExpiry() == 0)
 			CommandCenter.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
@@ -222,5 +224,11 @@ public abstract class Sprite implements Movable {
 
 	}
 
+	public int getSpriteScore() {
+		return spriteScore;
+	}
 
+	public void setSpriteScore(int spriteScore) {
+		this.spriteScore = spriteScore;
+	}
 }

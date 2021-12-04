@@ -159,15 +159,9 @@ public class Game implements Runnable, KeyListener {
 					CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
 					Sound.playSound("kapow.wav");
 
-					CommandCenter.getInstance().getOpsList().enqueue(new Explosion((Sprite) movFoe), CollisionOp.Operation.ADD);
-
-					if (radFoe == 100) {
-						CommandCenter.getInstance().setScore(CommandCenter.getInstance().getScore() + 20);
-					} else if (radFoe == 50) {
-						CommandCenter.getInstance().setScore(CommandCenter.getInstance().getScore() + 50);
-					} else if (radFoe == 25) {
-						CommandCenter.getInstance().setScore(CommandCenter.getInstance().getScore() + 100);
-					}
+					Sprite sprFoe = (Sprite) movFoe;
+					CommandCenter.getInstance().getOpsList().enqueue(new Explosion(sprFoe), CollisionOp.Operation.ADD);
+					CommandCenter.getInstance().setScore(CommandCenter.getInstance().getScore() + sprFoe.getSpriteScore());
 
 			 	}
 

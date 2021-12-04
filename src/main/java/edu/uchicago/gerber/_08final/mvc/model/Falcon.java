@@ -3,7 +3,6 @@ package edu.uchicago.gerber._08final.mvc.model;
 import edu.uchicago.gerber._08final.mvc.controller.Game;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,9 +50,9 @@ public class Falcon extends Sprite {
 		//Falcon uses fade.
 		setFade(FADE_INITIAL_VALUE);
 
-//		//be sure to set cartesian points last.
+		//be sure to set cartesian points last.
 		List<Point> pntCs = new ArrayList<>();
-//		// Robert Alef's awesome falcon design
+		// Robert Alef's awesome falcon design
 		pntCs.add(new Point(0,9));
 		pntCs.add(new Point(-1, 6));
 		pntCs.add(new Point(-1,3));
@@ -172,8 +171,6 @@ public class Falcon extends Sprite {
 
 	@Override
 	public void draw(Graphics g) {
-		BufferedImage img = CommandCenter.getInstance().getFalconImg();
-		drawImage(img, g);
 
 		Color colShip;
 		if (getFade() == 255) {

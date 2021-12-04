@@ -24,11 +24,11 @@ public class CommandCenter {
 	private  Falcon falcon;
 	private  boolean paused;
 
-	private BufferedImage ship;
 	private BufferedImage explosion1;
 	private BufferedImage explosion2;
 	private BufferedImage explosion3;
 	private BufferedImage explosion4;
+	private ArrayList<BufferedImage> asteroids;
 
 	private List<Movable> movDebris = new LinkedList<>();
 	private List<Movable> movFriends = new LinkedList<>();
@@ -62,7 +62,13 @@ public class CommandCenter {
 	}
 
 	private void loadGraphics() {
-		ship = loadGraphic("ship.png");
+		asteroids = new ArrayList<>();
+		asteroids.add(loadGraphic("asteroid1.png"));
+		asteroids.add(loadGraphic("asteroid2.png"));
+		asteroids.add(loadGraphic("asteroid3.png"));
+		asteroids.add(loadGraphic("asteroid4.png"));
+		asteroids.add(loadGraphic("asteroid5.png"));
+
 		explosion1 = loadGraphic("explosion1.png");
 		explosion2 = loadGraphic("explosion2.png");
 		explosion3 = loadGraphic("explosion3.png");
@@ -79,8 +85,12 @@ public class CommandCenter {
 			e.printStackTrace();
 			img = null;
 		}
-		System.out.println(System.getProperties().get("java.class.path"));
+
 		return img;
+	}
+
+	public BufferedImage getAsteroid(int asteroidNum) {
+		return asteroids.get(asteroidNum);
 	}
 
 	public BufferedImage getExplosion(int explosionNum) {
@@ -96,10 +106,6 @@ public class CommandCenter {
 			default:
 				return null;
 		}
-	}
-
-	public BufferedImage getFalconImg(){
-		return ship;
 	}
 
 	public  boolean isGameOver() {		//if the number of falcons is zero, then game over

@@ -39,10 +39,14 @@ public class Asteroid extends Sprite {
 		
 		//a size of zero is a big asteroid
 		//a size of 1 or 2 is med or small asteroid respectively
-		if (size == 0)
+		if (size == 0) {
 			setRadius(LARGE_RADIUS);
-		else
-			setRadius(LARGE_RADIUS/(size * 2));
+			this.setSpriteScore(20);
+		}
+		else {
+			setRadius(LARGE_RADIUS / (size * 2));
+			this.setSpriteScore(50*size);
+		}
 
 
 		//this method is in place of setting cartesian points
@@ -118,5 +122,4 @@ public class Asteroid extends Sprite {
 		 );
 
 	  }
-
 }
