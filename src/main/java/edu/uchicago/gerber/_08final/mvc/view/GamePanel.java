@@ -86,26 +86,22 @@ public class GamePanel extends Panel {
 			grpOff.drawString(strDisplay,
 					(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4);
 		}
-		
+
 		//playing and not paused!
 		else {
-
 			iterateMovables(grpOff,
 				CommandCenter.getInstance().getMovDebris(),
 				CommandCenter.getInstance().getMovFloaters(),
 				CommandCenter.getInstance().getMovFoes(),
 				CommandCenter.getInstance().getMovFriends());
 
-
+			drawLevel(grpOff);
 			drawNumberShipsLeft(grpOff);
-
-
 		}
 
 		//draw the double-Buffered Image to the graphics context of the panel
 		g.drawImage(imgOff, 0, 0, this);
 	} 
-
 
 	
 	//for each movable array, process it.
@@ -120,8 +116,14 @@ public class GamePanel extends Panel {
 		Arrays.stream(arrayOfListMovables)
 				.flatMap(Collection::stream)
 				.forEach(m -> moveDraw.accept(g, m));
+	}
 
-		
+
+	private void drawLevel(Graphics g) {
+		g.setColor(Color.white);
+		g.setFont(fnt);
+		g.drawString("LEVEL :  " + CommandCenter.getInstance().getLevel(),
+				fontWidth, Game.DIM.height - 40);
 	}
 
 
@@ -150,9 +152,6 @@ public class GamePanel extends Panel {
 							.toArray(),
 
 					falcon.getCartesians().length);
-
-
-
 	}
 	
 	private void initView() {

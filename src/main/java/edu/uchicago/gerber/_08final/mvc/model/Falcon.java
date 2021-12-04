@@ -156,9 +156,7 @@ public class Falcon extends Sprite {
 		turningLeft = false;
 	}
 
-	public void thrustOn() {
-		thrusting = true;
-	}
+	public void thrustOn() { thrusting = true; }
 
 	public void thrustOff() {
 		thrusting = false;
@@ -172,8 +170,13 @@ public class Falcon extends Sprite {
 
 	@Override
 	public void draw(Graphics g) {
-//		BufferedImage img = CommandCenter.getInstance().getFalconImg();
-//		drawImage(img, g);
+		BufferedImage img = CommandCenter.getInstance().getFalconImg();
+		drawImage(img, g);
+
+		if (isProtected()) {
+			BufferedImage imgShield = CommandCenter.getInstance().getShieldImg();
+			drawImage(imgShield, g);
+		}
 
 		Color colShip;
 		if (getFade() == 255) {
@@ -236,7 +239,7 @@ public class Falcon extends Sprite {
 
 		} //end if flame
 
-		draw(g,colShip);
+//		draw(g,colShip);
 
 	} //end draw()
 
