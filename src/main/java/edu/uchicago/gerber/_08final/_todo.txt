@@ -6,11 +6,11 @@ Create BufferedImage ship sprite
 Modify NewShipFloater to use falcon design points (fade to green)
 Create BufferedImage asteroid sprites for all sizes
 Display level on bottom left of panel
+Enter hyper upon pressing D with warp sound effect
 
 Ammo power ups
 Shield pickup
 Bomb/mine
-Hyper space
 Enemy ships
 
 Note: revert height dim back to 900 when done.

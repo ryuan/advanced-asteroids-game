@@ -45,12 +45,12 @@ public class Game implements Runnable, KeyListener {
 			START = 83, // s key
 			FIRE = 32, // space key
 			MUTE = 77, // m-key mute
+			HYPER = 68; // d key
 
 	// for possible future use
-	// HYPER = 68, 					// d key
 	// SHIELD = 65, 				// a key arrow
 	// NUM_ENTER = 10, 				// hyp
-	 SPECIAL = 70; 					// fire special weapon;  F key
+	// SPECIAL = 70; 					// fire special weapon;  F key
 
 	private Clip clpThrust;
 	private Clip clpMusicBackground;
@@ -389,7 +389,6 @@ public class Game implements Runnable, KeyListener {
 				CommandCenter.getInstance().getOpsList().enqueue(new Bullet(fal), CollisionOp.Operation.ADD);
 				Sound.playSound("laser.wav");
 				break;
-				
 
 			case LEFT:
 				fal.stopRotating();
@@ -410,6 +409,12 @@ public class Game implements Runnable, KeyListener {
 					clpMusicBackground.loop(Clip.LOOP_CONTINUOUSLY);
 				}
 				muted = !muted;
+				break;
+
+			case HYPER:
+				Point randPoint = new Point(Game.R.nextInt(Game.DIM.width), Game.R.nextInt(Game.DIM.height));
+				CommandCenter.getInstance().getFalcon().setCenter(randPoint);
+				Sound.playSound("warp.wav");
 				break;
 				
 			default:
