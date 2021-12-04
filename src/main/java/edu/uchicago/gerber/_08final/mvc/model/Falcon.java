@@ -23,6 +23,7 @@ public class Falcon extends Sprite {
 	public static final int FADE_INITIAL_VALUE = 51;
 	
 	//private boolean shield = false;
+	//private boolean shield = false;
 	private boolean thrusting = false;
 	private boolean turningRight = false;
 	private boolean turningLeft = false;
@@ -173,11 +174,6 @@ public class Falcon extends Sprite {
 		BufferedImage img = CommandCenter.getInstance().getFalconImg();
 		drawImage(img, g);
 
-		if (isProtected()) {
-			BufferedImage imgShield = CommandCenter.getInstance().getShieldImg();
-			drawImage(imgShield, g);
-		}
-
 		Color colShip;
 		if (getFade() == 255) {
 			colShip = Color.white;
@@ -188,6 +184,11 @@ public class Falcon extends Sprite {
 					adjustColor(getFade(), 175), //green
 					getFade() //blue
 			);
+		}
+
+		if (isProtected()) {
+			BufferedImage imgShield = CommandCenter.getInstance().getShieldImg();
+			drawImage(imgShield, g);
 		}
 
 		//most Sprites do not have flames, but Falcon does
@@ -238,8 +239,6 @@ public class Falcon extends Sprite {
 					flames.length);
 
 		} //end if flame
-
-//		draw(g,colShip);
 
 	} //end draw()
 

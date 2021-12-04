@@ -67,7 +67,7 @@ public class CommandCenter {
 
 	private void loadGraphics() {
 		ship = loadGraphic("ship.png");
-		shield = loadGraphic("shield.png");
+		shield = loadGraphic("shield_mod.png");
 
 		asteroids0 = new ArrayList<>();
 		asteroids0.add(loadGraphic("asteroid1_0.png"));
@@ -112,9 +112,7 @@ public class CommandCenter {
 	public BufferedImage getFalconImg(){
 		return ship;
 	}
-	public BufferedImage getShieldImg(){
-		return shield;
-	}
+	public BufferedImage getShieldImg(){ return shield; }
 
 	public BufferedImage getAsteroid(int asteroidNum, int size) {
 		if (size == 0) {
