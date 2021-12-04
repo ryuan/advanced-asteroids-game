@@ -1,6 +1,8 @@
 package edu.uchicago.gerber._08final.mvc.model;
 
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -14,6 +16,8 @@ public class Asteroid extends Sprite {
 
 	//radius of a large asteroid
 	private final int LARGE_RADIUS = 100;
+
+	private int asteroidNum;
 	
 	//size determines if the Asteroid is Large (0), Medium (1), or Small (2)
 	//when you explode a Large asteroid, you should spawn 2 or 3 medium asteroids
@@ -48,9 +52,9 @@ public class Asteroid extends Sprite {
 			this.setSpriteScore(50*size);
 		}
 
-
+		setAsteroidNum(Game.R.nextInt(5));
 		//this method is in place of setting cartesian points
-		assignRandomShape();
+//		assignRandomShape();
 
 	}
 
@@ -95,31 +99,44 @@ public class Asteroid extends Sprite {
 	}
 
 
-	  public void assignRandomShape (){
+//	public void assignRandomShape () {
+//
+//		//6.283 is the max radians
+//		final int MAX_RADIANS_X1000 =6283;
+//
+//		int sides = Game.R.nextInt( 7 ) + 17;
+//		PolarPoint[] polPolars = new PolarPoint[sides];
+//		for ( int nC = 0; nC < polPolars.length; nC++ ) {
+//			double r = (800 + Game.R.nextInt(200)) / 1000.0; //number between 0.8 and 1.0
+//			double theta = Game.R.nextInt(MAX_RADIANS_X1000) / 1000.0; // number between 0 and 6.283
+//			polPolars[nC] = new PolarPoint(r,theta);
+//		}
+//
+//		setCartesians(
+//			polarToCartesian(
+//				 Arrays.stream(polPolars)
+//				 .sorted(new Comparator<PolarPoint>() {
+//					 @Override
+//					 public int compare(PolarPoint pp1, PolarPoint pp2) {
+//						 return  pp1.getTheta().compareTo(pp2.getTheta());
+//					 }
+//				 })
+//				 .collect(Collectors.toList())
+//			)
+//		);
+//
+//	}
 
-		  //6.283 is the max radians
-		  final int MAX_RADIANS_X1000 =6283;
+	public int getAsteroidNum() {
+		return asteroidNum;
+	}
+	public void setAsteroidNum(int asteroidNum) {
+		this.asteroidNum = asteroidNum;
+	}
 
-		  int sides = Game.R.nextInt( 7 ) + 17;
-		  PolarPoint[] polPolars = new PolarPoint[sides];
-		  for ( int nC = 0; nC < polPolars.length; nC++ ){
-			  double r = (800 + Game.R.nextInt(200)) / 1000.0; //number between 0.8 and 1.0
-			  double theta = Game.R.nextInt(MAX_RADIANS_X1000) / 1000.0; // number between 0 and 6.283
-			  polPolars[nC] = new PolarPoint(r,theta);
-		  }
-
-		 setCartesians(
-		 	polarToCartesian(
-				 Arrays.stream(polPolars)
-				 .sorted(new Comparator<PolarPoint>() {
-					 @Override
-					 public int compare(PolarPoint pp1, PolarPoint pp2) {
-						 return  pp1.getTheta().compareTo(pp2.getTheta());
-					 }
-				 })
-				 .collect(Collectors.toList())
-			)
-		 );
-
-	  }
+	@Override
+	public void draw(Graphics g) {
+		BufferedImage img = CommandCenter.getInstance().getAsteroid(asteroidNum);
+		drawImage(img, g);
+	}
 }
