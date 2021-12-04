@@ -28,7 +28,9 @@ public class CommandCenter {
 	private BufferedImage explosion2;
 	private BufferedImage explosion3;
 	private BufferedImage explosion4;
-	private ArrayList<BufferedImage> asteroids;
+	private ArrayList<BufferedImage> asteroids0;
+	private ArrayList<BufferedImage> asteroids1;
+	private ArrayList<BufferedImage> asteroids2;
 
 	private List<Movable> movDebris = new LinkedList<>();
 	private List<Movable> movFriends = new LinkedList<>();
@@ -62,12 +64,26 @@ public class CommandCenter {
 	}
 
 	private void loadGraphics() {
-		asteroids = new ArrayList<>();
-		asteroids.add(loadGraphic("asteroid1.png"));
-		asteroids.add(loadGraphic("asteroid2.png"));
-		asteroids.add(loadGraphic("asteroid3.png"));
-		asteroids.add(loadGraphic("asteroid4.png"));
-		asteroids.add(loadGraphic("asteroid5.png"));
+		asteroids0 = new ArrayList<>();
+		asteroids0.add(loadGraphic("asteroid1_0.png"));
+		asteroids0.add(loadGraphic("asteroid2_0.png"));
+		asteroids0.add(loadGraphic("asteroid3_0.png"));
+		asteroids0.add(loadGraphic("asteroid4_0.png"));
+		asteroids0.add(loadGraphic("asteroid5_0.png"));
+
+		asteroids1 = new ArrayList<>();
+		asteroids1.add(loadGraphic("asteroid1_1.png"));
+		asteroids1.add(loadGraphic("asteroid2_1.png"));
+		asteroids1.add(loadGraphic("asteroid3_1.png"));
+		asteroids1.add(loadGraphic("asteroid4_1.png"));
+		asteroids1.add(loadGraphic("asteroid5_1.png"));
+
+		asteroids2 = new ArrayList<>();
+		asteroids2.add(loadGraphic("asteroid1_2.png"));
+		asteroids2.add(loadGraphic("asteroid2_2.png"));
+		asteroids2.add(loadGraphic("asteroid3_2.png"));
+		asteroids2.add(loadGraphic("asteroid4_2.png"));
+		asteroids2.add(loadGraphic("asteroid5_2.png"));
 
 		explosion1 = loadGraphic("explosion1.png");
 		explosion2 = loadGraphic("explosion2.png");
@@ -89,8 +105,14 @@ public class CommandCenter {
 		return img;
 	}
 
-	public BufferedImage getAsteroid(int asteroidNum) {
-		return asteroids.get(asteroidNum);
+	public BufferedImage getAsteroid(int asteroidNum, int size) {
+		if (size == 0) {
+			return asteroids0.get(asteroidNum);
+		} else if (size == 1) {
+			return asteroids1.get(asteroidNum);
+		} else {
+			return asteroids2.get(asteroidNum);
+		}
 	}
 
 	public BufferedImage getExplosion(int explosionNum) {
