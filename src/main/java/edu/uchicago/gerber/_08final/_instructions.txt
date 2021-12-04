@@ -110,7 +110,7 @@ Some things to keep in mind.
 1/ Sprite is essentially a shape circumscribed by a circle, which makes collision detection really easy. The down-side
 is that polar coordinates are difficult to work with. However, I created a method that allows you to create shapes using
 an ArrayList<Point> where the points are on a cartesian grid with 0,0 at the origin. When you add your points to the
-ArrayList, order matters, so that each point is adjascent to its neighbor in the ArrayList. The following ArrayList<Point>
+ArrayList, order matters, so that each point is adjacent to its neighbor in the ArrayList. The following ArrayList<Point>
 describes the shape of the fictitious Sprite. Just keep in mind that creating
 this ArrayList<Point> out-of-order will produce a jaggedy-shaped sprite. The following order is correct (though I could
 have traversed the points counter-clockwise with the same good result).

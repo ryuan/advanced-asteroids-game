@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        System.out.printf(String.valueOf(ImageIO.read(CommandCenter.class.getResourceAsStream("/img/asteroid1.png"))));
+        System.out.printf(String.valueOf(ImageIO.read(CommandCenter.class.getResourceAsStream("/img/ship.png"))));
     }
 }

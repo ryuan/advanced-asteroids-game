@@ -24,6 +24,7 @@ public class CommandCenter {
 	private  Falcon falcon;
 	private  boolean paused;
 
+	private BufferedImage ship;
 	private BufferedImage explosion1;
 	private BufferedImage explosion2;
 	private BufferedImage explosion3;
@@ -64,6 +65,8 @@ public class CommandCenter {
 	}
 
 	private void loadGraphics() {
+		ship = loadGraphic("ship.png");
+
 		asteroids0 = new ArrayList<>();
 		asteroids0.add(loadGraphic("asteroid1_0.png"));
 		asteroids0.add(loadGraphic("asteroid2_0.png"));
@@ -94,7 +97,6 @@ public class CommandCenter {
 	private BufferedImage loadGraphic(String imgName) {
 		BufferedImage img;
 		try {
-
 			img = ImageIO.read(CommandCenter.class.getResourceAsStream("/img/" + imgName));
 		}
 		catch (IOException e) {
@@ -103,6 +105,10 @@ public class CommandCenter {
 		}
 
 		return img;
+	}
+
+	public BufferedImage getFalconImg(){
+		return ship;
 	}
 
 	public BufferedImage getAsteroid(int asteroidNum, int size) {
