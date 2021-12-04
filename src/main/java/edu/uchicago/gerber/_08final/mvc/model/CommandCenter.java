@@ -5,7 +5,9 @@ package edu.uchicago.gerber._08final.mvc.model;
 import edu.uchicago.gerber._08final.mvc.controller.Sound;
 import lombok.Data;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,6 +56,44 @@ public class CommandCenter {
 		setScore(0);
 		setNumFalcons(4);
 		spawnFalcon();
+
+		loadGraphics();
+	}
+
+	private void loadGraphics() {
+		explosion1 = loadGraphic("explosion1.png");
+		explosion2 = loadGraphic("explosion2.png");
+		explosion3 = loadGraphic("explosion3.png");
+		explosion4 = loadGraphic("explosion4.png");
+	}
+
+	private BufferedImage loadGraphic(String imgName) {
+		BufferedImage img;
+		try {
+
+			img = ImageIO.read(CommandCenter.class.getResourceAsStream("/img/" + imgName));
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			img = null;
+		}
+		System.out.println(System.getProperties().get("java.class.path"));
+		return img;
+	}
+
+	public BufferedImage getExplosion(int explosionNum) {
+		switch(explosionNum){
+			case 1:
+				return explosion1;
+			case 2:
+				return explosion2;
+			case 3:
+				return explosion3;
+			case 4:
+				return explosion4;
+			default:
+				return null;
+		}
 	}
 
 	public  boolean isGameOver() {		//if the number of falcons is zero, then game over

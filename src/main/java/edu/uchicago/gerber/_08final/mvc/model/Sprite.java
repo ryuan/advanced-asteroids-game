@@ -3,6 +3,9 @@ package edu.uchicago.gerber._08final.mvc.model;
 import edu.uchicago.gerber._08final.mvc.controller.Game;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -54,7 +57,7 @@ public abstract class Sprite implements Movable {
 		double newYPos = pnt.y + getDeltaY();
 		
 		//the following code block just keeps the sprite inside the bounds of the frame
-		//to ensure this behavior among all sprites in your game, make sure to call super.maove() in extending classes.
+		//to ensure this behavior among all sprites in your game, make sure to call super.move() in extending classes.
 		if (pnt.x > Game.DIM.width) {
 			setCenter(new Point(1, pnt.y));
 
@@ -81,6 +84,15 @@ public abstract class Sprite implements Movable {
 				Game.R.nextInt(Game.DIM.height)));
 
 
+	}
+
+	public void drawImage(BufferedImage img, Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		AffineTransform transform = new AffineTransform();
+		transform.rotate(Math.toRadians(getOrientation()), img.getWidth()/2, img.getHeight()/2);
+		AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);
+		img = op.filter(img, null);
+		g2d.drawImage(img, getCenter().x - getRadius(), getCenter().y - getRadius(), null);
 	}
 
 	protected double hypotFunction(double dX, double dY) {
