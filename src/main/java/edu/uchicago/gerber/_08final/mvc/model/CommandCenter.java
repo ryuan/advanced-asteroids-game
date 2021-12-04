@@ -24,6 +24,7 @@ public class CommandCenter {
 	private  Falcon falcon;
 	private  boolean paused;
 
+	private BufferedImage ship;
 	private BufferedImage explosion1;
 	private BufferedImage explosion2;
 	private BufferedImage explosion3;
@@ -61,6 +62,7 @@ public class CommandCenter {
 	}
 
 	private void loadGraphics() {
+		ship = loadGraphic("ship.png");
 		explosion1 = loadGraphic("explosion1.png");
 		explosion2 = loadGraphic("explosion2.png");
 		explosion3 = loadGraphic("explosion3.png");
@@ -94,6 +96,10 @@ public class CommandCenter {
 			default:
 				return null;
 		}
+	}
+
+	public BufferedImage getFalconImg(){
+		return ship;
 	}
 
 	public  boolean isGameOver() {		//if the number of falcons is zero, then game over
