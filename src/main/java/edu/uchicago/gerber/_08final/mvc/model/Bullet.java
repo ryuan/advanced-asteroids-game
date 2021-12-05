@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Bullet extends Sprite {
 
-    private final double FIRE_POWER = 35.0;
+    public final double FIRE_POWER = 35.0;
 
 
     public Bullet(Falcon fal) {
@@ -17,8 +17,8 @@ public class Bullet extends Sprite {
         setTeam(Team.FRIEND);
 
 
-        //a bullet expires after 20 frames
-        setExpiry(20);
+        //a bullet expires after 15 frames
+        setExpiry(15);
         setRadius(6);
 
 
@@ -42,8 +42,39 @@ public class Bullet extends Sprite {
         pntCs.add(new Point(0, -2));
         pntCs.add(new Point(-1, -1));
         setCartesians(pntCs);
+    }
+
+    public Bullet(Falcon fal, int orientation) {
+
+        super();
+        setTeam(Team.FRIEND);
 
 
+        //a bullet expires after 15 frames
+        setExpiry(15);
+        setRadius(6);
+
+
+        //everything is relative to the falcon ship that fired the bullet
+        setDeltaX(fal.getDeltaX() +
+                Math.cos(Math.toRadians(orientation)) * FIRE_POWER);
+        setDeltaY(fal.getDeltaY() +
+                Math.sin(Math.toRadians(orientation)) * FIRE_POWER);
+        setCenter(fal.getCenter());
+
+        //set the bullet orientation to the falcon (ship) orientation
+        setOrientation(orientation);
+
+        //make sure to setCartesianPoints last
+        //defined the points on a cartesian grid
+        List<Point> pntCs = new ArrayList<>();
+
+        pntCs.add(new Point(0, 3)); //top point
+
+        pntCs.add(new Point(1, -1));
+        pntCs.add(new Point(0, -2));
+        pntCs.add(new Point(-1, -1));
+        setCartesians(pntCs);
     }
 
     @Override

@@ -8,6 +8,7 @@ import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 // ===============================================
@@ -56,8 +57,9 @@ public class Game implements Runnable, KeyListener {
 	private Clip clpMusicBackground;
 
 	//spawn every 30 seconds
-	private static final int SPAWN_NEW_SHIP_FLOATER = FRAMES_PER_SECOND * 30;
-	private static final int SPAWN_NEW_SHIELD_FLOATER = FRAMES_PER_SECOND * 30;
+	private static final int SPAWN_NEW_SHIP_FLOATER = FRAMES_PER_SECOND * 25;
+	private static final int SPAWN_NEW_SHIELD_FLOATER = FRAMES_PER_SECOND * 25;
+	private static final int SPAWN_NEW_BULLET_FLOATER = FRAMES_PER_SECOND * 10;
 	private static final int SPAWN_MINE = FRAMES_PER_SECOND * 20;
 
 
@@ -120,6 +122,7 @@ public class Game implements Runnable, KeyListener {
 			checkNewLevel();
 			spawnNewShipFloater();
 			spawnNewShieldFloater();
+			spawnNewBulletFloater();
 			spawnMine();
 
 			// surround the sleep() in a try/catch block
@@ -196,6 +199,9 @@ public class Game implements Runnable, KeyListener {
 					} else if (movFloater instanceof NewShieldFloater) {
 						CommandCenter.getInstance().getFalcon().setFade(Falcon.FADE_INITIAL_VALUE);
 						Sound.playSound("shieldup.wav");
+					} else if (movFloater instanceof NewBulletFloater) {
+						CommandCenter.getInstance().getFalcon().setBulletType(CommandCenter.getInstance().getFalcon().getBulletType() + 1);
+						Sound.playSound("anchor_action.wav");
 					}
 
 				}//end if 
@@ -296,6 +302,14 @@ public class Game implements Runnable, KeyListener {
 		}
 	}
 
+	private void spawnNewBulletFloater() {
+
+		//appears more often as your level increses.
+		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_NEW_BULLET_FLOATER - level * 8L) == 0) {
+			CommandCenter.getInstance().getOpsList().enqueue(new NewBulletFloater(), CollisionOp.Operation.ADD);
+		}
+	}
+
 	private void spawnMine() {
 
 		//appears more often as your level increses.
@@ -321,8 +335,36 @@ public class Game implements Runnable, KeyListener {
 
 		}
 	}
-	
-	
+
+	public void shootBullets(Falcon fal, int level) {
+		int oriFal = CommandCenter.getInstance().getFalcon().getOrientation();
+		int range;
+		if (level == 1) {
+			range = 0;
+		} else if (level == 2) {
+			range = 5;
+		} else if (level == 3) {
+			range = 10;
+		} else {
+			range = 25;
+		}
+
+		ArrayList<Integer> arr = new ArrayList<>();
+		for (int i = -range; i <= range; i+=5) {
+			if (oriFal + i > 359) {
+				arr.add(oriFal + i - 360);
+			} else if (oriFal + i < 0) {
+				arr.add(oriFal + i + 360);
+			} else {
+				arr.add(oriFal + i);
+			}
+		}
+
+		for (int orientation : arr) {
+			CommandCenter.getInstance().getOpsList().enqueue(new Bullet(fal, orientation), CollisionOp.Operation.ADD);
+		}
+	}
+
 	private boolean isLevelClear(){
 		//if there are no more Asteroids on the screen
 		boolean asteroidFree = true;
@@ -339,7 +381,7 @@ public class Game implements Runnable, KeyListener {
 		
 		if (isLevelClear() && CommandCenter.getInstance().getFalcon() != null) {
 			//more asteroids at each level to increase difficulty
-			spawnBigAsteroids(CommandCenter.getInstance().getLevel() + 2);
+			spawnBigAsteroids(CommandCenter.getInstance().getLevel() + 1);
 			CommandCenter.getInstance().setLevel(CommandCenter.getInstance().getLevel() + 1);
 			CommandCenter.getInstance().getFalcon().setFade(Falcon.FADE_INITIAL_VALUE);
 
@@ -375,7 +417,6 @@ public class Game implements Runnable, KeyListener {
 				CommandCenter.getInstance().setPaused(!CommandCenter.getInstance().isPaused());
 				if (CommandCenter.getInstance().isPaused())
 					stopLoopingSounds(clpMusicBackground, clpThrust);
-
 				break;
 			case QUIT:
 				System.exit(0);
@@ -413,7 +454,7 @@ public class Game implements Runnable, KeyListener {
 		if (fal != null) {
 			switch (nKey) {
 			case FIRE:
-				CommandCenter.getInstance().getOpsList().enqueue(new Bullet(fal), CollisionOp.Operation.ADD);
+				shootBullets(fal, CommandCenter.getInstance().getFalcon().getBulletType());
 				Sound.playSound("laser.wav");
 				break;
 

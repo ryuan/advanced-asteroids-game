@@ -17,7 +17,7 @@ public class NewShipFloater extends Sprite {
 
 		setExpiry(250);
 		setRadius(35);
-		setColor(Color.GREEN);
+		setColor(Color.BLACK);
 
 		setFade(FADE_INITIAL_VALUE);
 
@@ -110,7 +110,7 @@ public class NewShipFloater extends Sprite {
 	public void draw(Graphics g) {
 		Color colShip;
 		if (getFade() == 215) {
-			colShip = Color.green;
+			colShip = Color.GREEN;
 		} else {
 			colShip = new Color(
 					adjustColor(getFade(), 100), //red

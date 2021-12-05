@@ -28,6 +28,8 @@ public class Falcon extends Sprite {
 	private boolean turningRight = false;
 	private boolean turningLeft = false;
 
+	private int bulletType;
+
 
 	// ==============================================================
 	// CONSTRUCTOR 
@@ -51,6 +53,8 @@ public class Falcon extends Sprite {
 
 		//Falcon uses fade.
 		setFade(FADE_INITIAL_VALUE);
+
+		bulletType = 1;
 
 		//be sure to set cartesian points last.
 		List<Point> pntCs = new ArrayList<>();
@@ -163,7 +167,13 @@ public class Falcon extends Sprite {
 		thrusting = false;
 	}
 
+	public int getBulletType() {
+		return bulletType;
+	}
 
+	public void setBulletType(int bulletType) {
+		this.bulletType = bulletType;
+	}
 
 	private int adjustColor(int colorNum, int adjust) {
 		return Math.max(colorNum - adjust, 0);
