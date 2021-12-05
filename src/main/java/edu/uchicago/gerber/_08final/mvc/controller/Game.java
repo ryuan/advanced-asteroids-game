@@ -57,6 +57,7 @@ public class Game implements Runnable, KeyListener {
 
 	//spawn every 30 seconds
 	private static final int SPAWN_NEW_SHIP_FLOATER = FRAMES_PER_SECOND * 30;
+	private static final int SPAWN_NEW_UFO_FLOATER = FRAMES_PER_SECOND * 20;
 
 
 
@@ -117,6 +118,7 @@ public class Game implements Runnable, KeyListener {
 			checkCollisions();
 			checkNewLevel();
 			spawnNewShipFloater();
+			spawnNewUfoFloater();
 
 			// surround the sleep() in a try/catch block
 			// this simply controls delay time between
@@ -274,6 +276,14 @@ public class Game implements Runnable, KeyListener {
 		//appears more often as your level increses.
 		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_NEW_SHIP_FLOATER - level * 7L) == 0) {
 			CommandCenter.getInstance().getOpsList().enqueue(new NewShipFloater(), CollisionOp.Operation.ADD);
+		}
+	}
+
+	private void spawnNewUfoFloater() {
+
+		//appears more often as your level increses.
+		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_NEW_UFO_FLOATER - level * 7L) == 0) {
+			CommandCenter.getInstance().getOpsList().enqueue(new Mine(CommandCenter.getInstance().getFalcon()), CollisionOp.Operation.ADD);
 		}
 	}
 

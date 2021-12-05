@@ -33,6 +33,9 @@ public class CommandCenter {
 	private ArrayList<BufferedImage> asteroids0;
 	private ArrayList<BufferedImage> asteroids1;
 	private ArrayList<BufferedImage> asteroids2;
+	private BufferedImage mine1;
+	private BufferedImage mine2;
+	private BufferedImage mine3;
 
 	private List<Movable> movDebris = new LinkedList<>();
 	private List<Movable> movFriends = new LinkedList<>();
@@ -94,6 +97,10 @@ public class CommandCenter {
 		explosion2 = loadGraphic("explosion2.png");
 		explosion3 = loadGraphic("explosion3.png");
 		explosion4 = loadGraphic("explosion4.png");
+
+		mine1 = loadGraphic("mine1.png");
+		mine2 = loadGraphic("mine2.png");
+		mine3 = loadGraphic("mine3.png");
 	}
 
 	private BufferedImage loadGraphic(String imgName) {
@@ -134,6 +141,19 @@ public class CommandCenter {
 				return explosion3;
 			case 4:
 				return explosion4;
+			default:
+				return null;
+		}
+	}
+
+	public BufferedImage getMine(int mineNum) {
+		switch (mineNum) {
+			case 1:
+				return mine1;
+			case 2:
+				return mine2;
+			case 3:
+				return mine3;
 			default:
 				return null;
 		}

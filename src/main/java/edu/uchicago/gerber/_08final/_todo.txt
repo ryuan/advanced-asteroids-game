@@ -7,10 +7,10 @@ Modify NewShipFloater to use falcon design points (fade to green)
 Create BufferedImage asteroid sprites for all sizes
 Display level on bottom left of panel
 Enter hyper upon pressing D with warp sound effect
+Enemy mines (homing towards falcon) with blinking animation
 
 Ammo power ups
 Shield pickup
 Bomb/mine
-Enemy ships
 
 Note: revert height dim back to 900 when done.
