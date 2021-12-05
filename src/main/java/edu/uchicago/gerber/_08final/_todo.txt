@@ -1,17 +1,19 @@
 Display score
 Increment ship lives after colliding with NewShipFloater
-Implement debris/explosion via BufferedImage animation
+Implement debris/explosion
 
-Create BufferedImage ship sprite
+Implement BufferedImage graphics system to allow sprite usage
+Modify debris/explosion with BufferedImage to animate with sprites
+Replace falcon model with BufferedImage ship sprite
 Modify NewShipFloater to use falcon design points (fade to green)
 Create BufferedImage asteroid sprites for all sizes
 Display level on bottom left of panel
 Enter hyper upon pressing D with warp sound effect
 Enemy mines homing towards falcon with blinking animation
 Regenerate shield pickup floater with very gentle gravitation to falcon
-Bullet power ups and floaters implemented (triple, tetra, radial)
+Bullet power ups and floaters implemented (triple shot, tetra blaster, radial artillery)
 
-Bomb/mine
+Shockwave missile
 Starfield background
 
 Note: revert height dim back to 900 when done.
