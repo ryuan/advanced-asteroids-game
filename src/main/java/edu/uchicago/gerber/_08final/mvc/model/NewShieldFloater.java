@@ -4,26 +4,31 @@ import edu.uchicago.gerber._08final.mvc.controller.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Mine extends Sprite {
+public class NewShieldFloater extends Sprite {
     private Falcon falcon;
-    private int currentMineNum;
 
-    public Mine(Falcon falcon) {
+    public NewShieldFloater(Falcon falcon) {
         super();
 
         this.falcon = falcon;
 
-        setTeam(Team.FOE);
+        setTeam(Team.FLOATER);
 
         setExpiry(250);
-        setRadius(5);
+        setRadius(35);
 
-        setCenter(new Point(Game.R.nextInt(Game.DIM.width), Game.R.nextInt(Game.DIM.height)));
+        //set random spin
+        setSpin(somePosNegValue(7));
 
+        //random point on the screen
+        setCenter(new Point(Game.R.nextInt(Game.DIM.width),
+                Game.R.nextInt(Game.DIM.height)));
+
+        //random orientation
         setOrientation(Game.R.nextInt(360));
-
-        currentMineNum = 1;
     }
 
     @Override
@@ -33,25 +38,20 @@ public class Mine extends Sprite {
         if (getExpiry() == 0) {
             CommandCenter.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
         } else {
+            setOrientation(getOrientation() + getSpin());
             expire();
 
             int deltaX = falcon.getCenter().x - this.getCenter().x;
             int deltaY = falcon.getCenter().y - this.getCenter().y;
 
             double radians = Math.atan2(deltaY, deltaX);
-            setDeltaX(Math.cos(radians) * 4);
-            setDeltaY(Math.sin(radians) * 4);
+            setDeltaX(Math.cos(radians) * 3);
+            setDeltaY(Math.sin(radians) * 3);
         }
     }
 
-    @Override
     public void draw(Graphics g) {
-        BufferedImage img = CommandCenter.getInstance().getMine(currentMineNum);
+        BufferedImage img = CommandCenter.getInstance().getNewShieldImg();
         drawImage(img, g);
-
-        currentMineNum += 1;
-        if (currentMineNum >= 4) {
-            currentMineNum = 1;
-        }
     }
 }

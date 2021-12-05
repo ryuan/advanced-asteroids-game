@@ -57,7 +57,8 @@ public class Game implements Runnable, KeyListener {
 
 	//spawn every 30 seconds
 	private static final int SPAWN_NEW_SHIP_FLOATER = FRAMES_PER_SECOND * 30;
-	private static final int SPAWN_NEW_UFO_FLOATER = FRAMES_PER_SECOND * 20;
+	private static final int SPAWN_NEW_SHIELD_FLOATER = FRAMES_PER_SECOND * 30;
+	private static final int SPAWN_MINE = FRAMES_PER_SECOND * 20;
 
 
 
@@ -118,7 +119,8 @@ public class Game implements Runnable, KeyListener {
 			checkCollisions();
 			checkNewLevel();
 			spawnNewShipFloater();
-			spawnNewUfoFloater();
+			spawnNewShieldFloater();
+			spawnMine();
 
 			// surround the sleep() in a try/catch block
 			// this simply controls delay time between
@@ -151,6 +153,8 @@ public class Game implements Runnable, KeyListener {
 				radFriend = movFriend.getRadius();
 				radFoe = movFoe.getRadius();
 
+				Sprite sprFoe = (Sprite) movFoe;
+
 				//detect collision
 				if (pntFriendCenter.distance(pntFoeCenter) < (radFriend + radFoe)) {
 					//remove the friend (so long as he is not protected)
@@ -161,7 +165,6 @@ public class Game implements Runnable, KeyListener {
 					CommandCenter.getInstance().getOpsList().enqueue(movFoe, CollisionOp.Operation.REMOVE);
 					Sound.playSound("kapow.wav");
 
-					Sprite sprFoe = (Sprite) movFoe;
 					CommandCenter.getInstance().getOpsList().enqueue(new Explosion(sprFoe), CollisionOp.Operation.ADD);
 					CommandCenter.getInstance().setScore(CommandCenter.getInstance().getScore() + sprFoe.getSpriteScore());
 
@@ -188,7 +191,13 @@ public class Game implements Runnable, KeyListener {
 					CommandCenter.getInstance().getOpsList().enqueue(movFloater, CollisionOp.Operation.REMOVE);
 					Sound.playSound("pacman_eatghost.wav");
 
-					CommandCenter.getInstance().setNumFalcons(CommandCenter.getInstance().getNumFalcons() + 1);
+					if (movFloater instanceof NewShipFloater) {
+						CommandCenter.getInstance().setNumFalcons(CommandCenter.getInstance().getNumFalcons() + 1);
+					} else if (movFloater instanceof NewShieldFloater) {
+						CommandCenter.getInstance().getFalcon().setFade(Falcon.FADE_INITIAL_VALUE);
+						Sound.playSound("shieldup.wav");
+					}
+
 				}//end if 
 			}//end inner for
 		}//end if not null
@@ -279,10 +288,18 @@ public class Game implements Runnable, KeyListener {
 		}
 	}
 
-	private void spawnNewUfoFloater() {
+	private void spawnNewShieldFloater() {
 
 		//appears more often as your level increses.
-		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_NEW_UFO_FLOATER - level * 7L) == 0) {
+		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_NEW_SHIELD_FLOATER - level * 7L) == 0) {
+			CommandCenter.getInstance().getOpsList().enqueue(new NewShieldFloater(CommandCenter.getInstance().getFalcon()), CollisionOp.Operation.ADD);
+		}
+	}
+
+	private void spawnMine() {
+
+		//appears more often as your level increses.
+		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_MINE - level * 7L) == 0) {
 			CommandCenter.getInstance().getOpsList().enqueue(new Mine(CommandCenter.getInstance().getFalcon()), CollisionOp.Operation.ADD);
 		}
 	}
@@ -291,7 +308,7 @@ public class Game implements Runnable, KeyListener {
 	private void startGame() {
 		CommandCenter.getInstance().clearAll();
 		CommandCenter.getInstance().initGame();
-		CommandCenter.getInstance().setLevel(0);
+//		CommandCenter.getInstance().setLevel(0);
 		CommandCenter.getInstance().setPaused(false);
 
 	}

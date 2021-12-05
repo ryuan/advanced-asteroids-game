@@ -28,7 +28,7 @@ public class NewShipFloater extends Sprite {
 		setDeltaY(somePosNegValue(10));
 		
 		//set random spin
-		setSpin(somePosNegValue(10));
+		setSpin(somePosNegValue(7));
 
 		//random point on the screen
 		setCenter(new Point(Game.R.nextInt(Game.DIM.width),

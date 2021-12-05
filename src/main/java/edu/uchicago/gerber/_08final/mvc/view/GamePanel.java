@@ -194,15 +194,16 @@ public class GamePanel extends Panel {
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
 						+ fontHeight + 200);
-		strDisplay = "left pinkie on 'A' for Shield";
-		grpOff.drawString(strDisplay,
-				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 240);
 
 		strDisplay = "left middle finger on 'D' for Hyperspace";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 280);
+						+ fontHeight + 240);
+
+//		strDisplay = "left pinkie on 'A' for Shield";
+//		grpOff.drawString(strDisplay,
+//				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
+//						+ fontHeight + 280);
 	}
 	
 
