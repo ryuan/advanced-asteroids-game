@@ -12,5 +12,6 @@ Regenerate shield pickup floater with very gentle gravitation to falcon
 Bullet power ups and floaters implemented (triple, tetra, radial)
 
 Bomb/mine
+Starfield background
 
 Note: revert height dim back to 900 when done.
