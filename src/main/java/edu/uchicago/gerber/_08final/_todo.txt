@@ -1,7 +1,9 @@
+Core Completed:
 Display score
 Increment ship lives after colliding with NewShipFloater
 Implement debris/explosion
 
+Upgrades Completed:
 Implement BufferedImage graphics system to allow sprite usage
 Modify debris/explosion with BufferedImage to animate with sprites
 Replace falcon model with BufferedImage ship sprite
@@ -13,6 +15,7 @@ Enemy mines homing towards falcon with blinking animation
 Regenerate shield pickup floater with very gentle gravitation to falcon
 Bullet power ups and floaters implemented (triple shot, tetra blaster, radial artillery)
 
+Upgrades To-Dos:
 Shockwave missile
 Starfield background
 
