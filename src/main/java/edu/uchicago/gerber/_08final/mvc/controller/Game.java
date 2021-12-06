@@ -8,6 +8,7 @@ import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -68,7 +69,7 @@ public class Game implements Runnable, KeyListener {
 	// ==CONSTRUCTOR
 	// ===============================================
 
-	public Game() {
+	public Game() throws IOException {
 
 		gmpPanel = new GamePanel(DIM);
 		gmpPanel.addKeyListener(this);

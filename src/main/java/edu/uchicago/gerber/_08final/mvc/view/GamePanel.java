@@ -5,7 +5,10 @@ import edu.uchicago.gerber._08final.mvc.model.CommandCenter;
 import edu.uchicago.gerber._08final.mvc.model.Falcon;
 import edu.uchicago.gerber._08final.mvc.model.Movable;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -31,13 +34,14 @@ public class GamePanel extends Panel {
 	private int fontWidth;
 	private int fontHeight;
 	private String strDisplay = "";
+	private Image img;
 	
 
 	// ==============================================================
 	// CONSTRUCTOR 
 	// ==============================================================
 	
-	public GamePanel(Dimension dim){
+	public GamePanel(Dimension dim) throws IOException {
 	    gmf = new GameFrame();
 		gmf.getContentPane().add(this);
 		gmf.pack();
@@ -48,6 +52,8 @@ public class GamePanel extends Panel {
 		gmf.setResizable(false);
 		gmf.setVisible(true);
 		this.setFocusable(true);
+
+		img = ImageIO.read(CommandCenter.class.getResourceAsStream("/img/planet_opt.jpg"));
 	}
 	
 	
@@ -75,7 +81,8 @@ public class GamePanel extends Panel {
 		}
 		// Fill in background with black.
 		grpOff.setColor(Color.black);
-		grpOff.fillRect(0, 0, Game.DIM.width, Game.DIM.height);
+//		grpOff.fillRect(0, 0, Game.DIM.width, Game.DIM.height);
+		grpOff.drawImage(img,0,0, null);
 
 		drawScore(grpOff);
 		
