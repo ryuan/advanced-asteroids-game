@@ -334,8 +334,8 @@ public class Game implements Runnable, KeyListener {
 	// Called when user presses 's'
 	private void startGame() {
 		CommandCenter.getInstance().clearAll();
-		CommandCenter.getInstance().initGame();
 //		CommandCenter.getInstance().setLevel(0);
+		CommandCenter.getInstance().initGame();
 		CommandCenter.getInstance().setPaused(false);
 
 	}
@@ -349,14 +349,14 @@ public class Game implements Runnable, KeyListener {
 		}
 	}
 
-	public void shootBullets(Falcon fal, int level) {
+	public void shootBullets(Falcon fal, int bulletLevel) {
 		int oriFal = CommandCenter.getInstance().getFalcon().getOrientation();
 		int range;
-		if (level == 1) {
+		if (bulletLevel == 1) {
 			range = 0;
-		} else if (level == 2) {
+		} else if (bulletLevel == 2) {
 			range = 5;
-		} else if (level == 3) {
+		} else if (bulletLevel == 3) {
 			range = 10;
 		} else {
 			range = 25;
@@ -391,11 +391,12 @@ public class Game implements Runnable, KeyListener {
 	}
 	
 	private void checkNewLevel(){
-		
+
 		if (isLevelClear() && CommandCenter.getInstance().getFalcon() != null) {
 			//more asteroids at each level to increase difficulty
 			spawnBigAsteroids(CommandCenter.getInstance().getLevel() + 1);
 			CommandCenter.getInstance().setLevel(CommandCenter.getInstance().getLevel() + 1);
+			this.level++;
 			CommandCenter.getInstance().getFalcon().setFade(Falcon.FADE_INITIAL_VALUE);
 
 		}

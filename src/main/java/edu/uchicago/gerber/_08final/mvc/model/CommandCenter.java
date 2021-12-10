@@ -65,7 +65,7 @@ public class CommandCenter {
 	public void initGame(){
 		loadGraphics();
 
-		setLevel(1);
+		setLevel(0);
 		setScore(0);
 		setNumFalcons(4);
 		setNumMissiles(2);
