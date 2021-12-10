@@ -3,6 +3,7 @@ package edu.uchicago.gerber._08final.mvc.view;
 import edu.uchicago.gerber._08final.mvc.controller.Game;
 import edu.uchicago.gerber._08final.mvc.model.CommandCenter;
 import edu.uchicago.gerber._08final.mvc.model.Falcon;
+import edu.uchicago.gerber._08final.mvc.model.Missile;
 import edu.uchicago.gerber._08final.mvc.model.Movable;
 
 import javax.imageio.ImageIO;
@@ -103,6 +104,7 @@ public class GamePanel extends Panel {
 				CommandCenter.getInstance().getMovFriends());
 
 			drawLevel(grpOff);
+			drawNumberMissilesLeft(grpOff);
 			drawNumberShipsLeft(grpOff);
 		}
 
@@ -160,6 +162,35 @@ public class GamePanel extends Panel {
 
 					falcon.getCartesians().length);
 	}
+
+
+	private void drawNumberMissilesLeft(Graphics g){
+		int numMissiles = CommandCenter.getInstance().getNumMissiles();
+		while (numMissiles > 0){
+			drawOneMissileLeft(g, numMissiles--);
+		}
+	}
+
+	// Draw the number of missiles left on the top-right of the screen. Upside-down, but ok.
+	private void drawOneMissileLeft(Graphics g, int offSet) {
+		Missile missile = new Missile(new Falcon());
+
+		g.setColor(Color.white);
+
+		g.drawPolygon(
+				Arrays.stream(missile.getCartesians())
+						.map(pnt -> pnt.x + Game.DIM.width - (20 * offSet))
+						.mapToInt(Integer::intValue)
+						.toArray(),
+
+				Arrays.stream(missile.getCartesians())
+						.map(pnt -> pnt.y + 10)
+						.mapToInt(Integer::intValue)
+						.toArray(),
+
+				missile.getCartesians().length);
+	}
+
 	
 	private void initView() {
 		Graphics g = getGraphics();			// get the graphics context for the panel

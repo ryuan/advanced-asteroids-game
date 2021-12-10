@@ -47,10 +47,10 @@ public class Game implements Runnable, KeyListener {
 			START = 83, // s key
 			FIRE = 32, // space key
 			MUTE = 77, // m-key mute
-			HYPER = 68; // d key
+			HYPER = 68, // d key
+ 			MISSILE = 65; // a key arrow
 
 	// for possible future use
-	// SHIELD = 65, 				// a key arrow
 	// NUM_ENTER = 10, 				// hyp
 	// SPECIAL = 70; 					// fire special weapon;  F key
 
@@ -59,8 +59,9 @@ public class Game implements Runnable, KeyListener {
 
 	//spawn every 30 seconds
 	private static final int SPAWN_NEW_SHIP_FLOATER = FRAMES_PER_SECOND * 25;
-	private static final int SPAWN_NEW_SHIELD_FLOATER = FRAMES_PER_SECOND * 25;
-	private static final int SPAWN_NEW_BULLET_FLOATER = FRAMES_PER_SECOND * 10;
+	private static final int SPAWN_NEW_SHIELD_FLOATER = FRAMES_PER_SECOND * 15;
+	private static final int SPAWN_NEW_BULLET_FLOATER = FRAMES_PER_SECOND * 20;
+	private static final int SPAWN_NEW_MISSILE_FLOATER = FRAMES_PER_SECOND * 10;
 	private static final int SPAWN_MINE = FRAMES_PER_SECOND * 20;
 
 
@@ -124,6 +125,7 @@ public class Game implements Runnable, KeyListener {
 			spawnNewShipFloater();
 			spawnNewShieldFloater();
 			spawnNewBulletFloater();
+			spawnNewMissileFloater();
 			spawnMine();
 
 			// surround the sleep() in a try/catch block
@@ -197,6 +199,8 @@ public class Game implements Runnable, KeyListener {
 
 					if (movFloater instanceof NewShipFloater) {
 						CommandCenter.getInstance().setNumFalcons(CommandCenter.getInstance().getNumFalcons() + 1);
+					} else if (movFloater instanceof NewMissileFloater) {
+						CommandCenter.getInstance().setNumMissiles(CommandCenter.getInstance().getNumMissiles() + 1);
 					} else if (movFloater instanceof NewShieldFloater) {
 						CommandCenter.getInstance().getFalcon().setFade(Falcon.FADE_INITIAL_VALUE);
 						Sound.playSound("shieldup.wav");
@@ -308,6 +312,14 @@ public class Game implements Runnable, KeyListener {
 		//appears more often as your level increses.
 		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_NEW_BULLET_FLOATER - level * 8L) == 0) {
 			CommandCenter.getInstance().getOpsList().enqueue(new NewBulletFloater(), CollisionOp.Operation.ADD);
+		}
+	}
+
+	private void spawnNewMissileFloater() {
+
+		//appears more often as your level increses.
+		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_NEW_MISSILE_FLOATER - level * 7L) == 0) {
+			CommandCenter.getInstance().getOpsList().enqueue(new NewMissileFloater(), CollisionOp.Operation.ADD);
 		}
 	}
 
@@ -436,7 +448,6 @@ public class Game implements Runnable, KeyListener {
 
 			// possible future use
 			// case KILL:
-			// case SHIELD:
 			// case NUM_ENTER:
 
 			default:
@@ -457,6 +468,17 @@ public class Game implements Runnable, KeyListener {
 			case FIRE:
 				shootBullets(fal, CommandCenter.getInstance().getFalcon().getBulletType());
 				Sound.playSound("laser.wav");
+				break;
+
+			case MISSILE:
+				if (CommandCenter.getInstance().getNumMissiles() > 0) {
+					CommandCenter.getInstance().getOpsList().enqueue(new Missile(fal), CollisionOp.Operation.ADD);
+					CommandCenter.getInstance().setNumMissiles(CommandCenter.getInstance().getNumMissiles() - 1);
+					Sound.playSound("missile.wav");
+				} else {
+					Sound.playSound("outofammo.wav");
+				}
+
 				break;
 
 			case LEFT:

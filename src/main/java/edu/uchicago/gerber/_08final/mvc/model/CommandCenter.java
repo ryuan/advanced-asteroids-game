@@ -17,6 +17,7 @@ import java.util.List;
 public class CommandCenter {
 
 	private  int numFalcons;
+	private  int numMissiles;
 	private  int level;
 	private  long score;
 	//the falcon is located in the movFriends list, but since we use this reference a lot, we keep track of it in a
@@ -25,8 +26,10 @@ public class CommandCenter {
 	private  boolean paused;
 
 	private BufferedImage ship;
+	private BufferedImage missile;
 	private BufferedImage shield;
 	private BufferedImage newShield;
+	private BufferedImage upgrade;
 	private BufferedImage explosion1;
 	private BufferedImage explosion2;
 	private BufferedImage explosion3;
@@ -59,20 +62,22 @@ public class CommandCenter {
 		return instance;
 	}
 
-
 	public void initGame(){
 		loadGraphics();
 
 		setLevel(1);
 		setScore(0);
 		setNumFalcons(4);
+		setNumMissiles(2);
 		spawnFalcon();
 	}
 
 	private void loadGraphics() {
 		ship = loadGraphic("ship.png");
+		missile = loadGraphic("missile.png");
 		shield = loadGraphic("shield_mod.png");
 		newShield = loadGraphic("new_shield.png");
+		upgrade = loadGraphic("upgrade.png");
 
 		asteroids0 = new ArrayList<>();
 		asteroids0.add(loadGraphic("asteroid1_0.png"));
@@ -121,8 +126,10 @@ public class CommandCenter {
 	public BufferedImage getFalconImg(){
 		return ship;
 	}
+	public BufferedImage getMissileImg() { return missile; }
 	public BufferedImage getShieldImg() { return shield; }
 	public BufferedImage getNewShieldImg() { return newShield; }
+	public BufferedImage getUpgradeImg() { return upgrade; }
 
 	public BufferedImage getAsteroid(int asteroidNum, int size) {
 		if (size == 0) {
