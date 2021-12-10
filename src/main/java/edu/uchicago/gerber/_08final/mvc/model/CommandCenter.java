@@ -25,7 +25,10 @@ public class CommandCenter {
 	private  Falcon falcon;
 	private  boolean paused;
 
-	private BufferedImage ship;
+	private ArrayList<BufferedImage> ship1;
+	private ArrayList<BufferedImage> ship2;
+	private ArrayList<BufferedImage> ship3;
+	private ArrayList<BufferedImage> ship4;
 	private BufferedImage missile;
 	private BufferedImage shield;
 	private BufferedImage newShield;
@@ -73,7 +76,30 @@ public class CommandCenter {
 	}
 
 	private void loadGraphics() {
-		ship = loadGraphic("ship.png");
+		ship1 = new ArrayList<>();
+		ship1.add(loadGraphic("ship1_1.png"));
+		ship1.add(loadGraphic("ship1_2.png"));
+		ship1.add(loadGraphic("ship1_3.png"));
+		ship1.add(loadGraphic("ship1_4.png"));
+
+		ship2 = new ArrayList<>();
+		ship2.add(loadGraphic("ship2_1.png"));
+		ship2.add(loadGraphic("ship2_2.png"));
+		ship2.add(loadGraphic("ship2_3.png"));
+		ship2.add(loadGraphic("ship2_4.png"));
+
+		ship3 = new ArrayList<>();
+		ship3.add(loadGraphic("ship3_1.png"));
+		ship3.add(loadGraphic("ship3_2.png"));
+		ship3.add(loadGraphic("ship3_3.png"));
+		ship3.add(loadGraphic("ship3_4.png"));
+
+		ship4 = new ArrayList<>();
+		ship4.add(loadGraphic("ship4_1.png"));
+		ship4.add(loadGraphic("ship4_2.png"));
+		ship4.add(loadGraphic("ship4_3.png"));
+		ship4.add(loadGraphic("ship4_4.png"));
+
 		missile = loadGraphic("missile.png");
 		shield = loadGraphic("shield_mod.png");
 		newShield = loadGraphic("new_shield.png");
@@ -123,9 +149,18 @@ public class CommandCenter {
 		return img;
 	}
 
-	public BufferedImage getFalconImg(){
-		return ship;
+	public BufferedImage getFalconImg(int level, int currentShipNum) {
+		if (level == 1) {
+			return ship1.get(currentShipNum);
+		} else if(level == 2) {
+			return ship2.get(currentShipNum);
+		} else if(level == 3) {
+			return ship3.get(currentShipNum);
+		} else {
+			return ship4.get(currentShipNum);
+		}
 	}
+
 	public BufferedImage getMissileImg() { return missile; }
 	public BufferedImage getShieldImg() { return shield; }
 	public BufferedImage getNewShieldImg() { return newShield; }

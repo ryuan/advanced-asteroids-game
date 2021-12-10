@@ -6,14 +6,16 @@ Implement debris/explosion
 Upgrades Completed:
 Implement BufferedImage graphics system to allow sprite usage
 Modify debris/explosion with BufferedImage to animate with sprites
+Bullet power ups and floaters implemented (triple shot, tetra blaster, radial artillery)
 Replace falcon model with BufferedImage ship sprite
+Upgrade falcon sprites with animated frames
+Make animated falcon sprites upgrade in model with each bullet power up until max level of 4
 Modify NewShipFloater to use falcon design points (fade to green)
 Create BufferedImage asteroid sprites for all sizes
 Display level on bottom left of panel
 Enter hyper upon pressing D with warp sound effect
 Enemy mines homing towards falcon with blinking animation
 Regenerate shield pickup floater with very gentle gravitation to falcon
-Bullet power ups and floaters implemented (triple shot, tetra blaster, radial artillery)
 Add planetary outskirts background
 Add shockwave missiles that fire upon pressing A button
 Add missile pickup floaters to limit number of missile uses

@@ -16,7 +16,7 @@ public class Missile extends Sprite {
 
         //a cruis missile expires after 25 frames
         setExpiry(MAX_EXPIRE);
-        setRadius(50);
+        setRadius(25);
 
         //everything is relative to the falcon ship that fired the bullet
         setDeltaX(fal.getDeltaX()

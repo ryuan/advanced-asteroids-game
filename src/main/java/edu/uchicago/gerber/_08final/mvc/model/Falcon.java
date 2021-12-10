@@ -29,6 +29,7 @@ public class Falcon extends Sprite {
 	private boolean turningLeft = false;
 
 	private int bulletType;
+	private int currentShipNum;
 
 
 	// ==============================================================
@@ -49,12 +50,13 @@ public class Falcon extends Sprite {
 		setOrientation(Game.R.nextInt(360));
 		
 		//this is the size (radius) of the falcon
-		setRadius(35);
+		setRadius(30);
 
 		//Falcon uses fade.
 		setFade(FADE_INITIAL_VALUE);
 
 		bulletType = 1;
+		currentShipNum = 0;
 
 		//be sure to set cartesian points last.
 		List<Point> pntCs = new ArrayList<>();
@@ -181,8 +183,13 @@ public class Falcon extends Sprite {
 
 	@Override
 	public void draw(Graphics g) {
-		BufferedImage img = CommandCenter.getInstance().getFalconImg();
+		BufferedImage img = CommandCenter.getInstance().getFalconImg(bulletType, currentShipNum);
 		drawImage(img, g);
+
+		currentShipNum += 1;
+		if (currentShipNum > 3) {
+			currentShipNum = 0;
+		}
 
 		Color colShip;
 		if (getFade() == 255) {

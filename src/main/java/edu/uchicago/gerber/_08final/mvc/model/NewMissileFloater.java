@@ -14,7 +14,7 @@ public class NewMissileFloater extends Sprite {
         setTeam(Team.FLOATER);
 
         setExpiry(250);
-        setRadius(35);
+        setRadius(30);
         setColor(Color.BLACK);
 
         setFade(FADE_INITIAL_VALUE);

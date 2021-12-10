@@ -18,7 +18,7 @@ public class NewShieldFloater extends Sprite {
         setTeam(Team.FLOATER);
 
         setExpiry(250);
-        setRadius(35);
+        setRadius(30);
 
         //set random spin
         setSpin(somePosNegValue(7));
