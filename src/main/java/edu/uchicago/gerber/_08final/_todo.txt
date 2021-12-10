@@ -15,8 +15,8 @@ Enemy mines homing towards falcon with blinking animation
 Regenerate shield pickup floater with very gentle gravitation to falcon
 Bullet power ups and floaters implemented (triple shot, tetra blaster, radial artillery)
 Add planetary outskirts background
-
-Upgrades To-Dos:
-Shockwave missile
+Add shockwave missiles that fire upon pressing A button
+Add missile pickup floaters to limit number of missile uses
+Add missile count display to top-right of panel
 
 Note: revert height dim back to 900 when done.
