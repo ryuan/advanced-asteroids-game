@@ -347,10 +347,10 @@ public class Game implements Runnable, KeyListener {
 	// Called when user presses 's'
 	private void startGame() {
 		CommandCenter.getInstance().clearAll();
+		level = 0;
 //		CommandCenter.getInstance().setLevel(0);
 		CommandCenter.getInstance().initGame();
 		CommandCenter.getInstance().setPaused(false);
-
 	}
 
 	//this method spawns new asteroids
