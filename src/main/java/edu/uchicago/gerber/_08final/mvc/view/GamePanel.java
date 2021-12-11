@@ -204,7 +204,7 @@ public class GamePanel extends Panel {
 	// This method draws some text to the middle of the screen before/after a game
 	private void displayTextOnScreen() {
 
-		strDisplay = "PLANET DEFENCE";
+		strDisplay = "SAVE US";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4);
 
@@ -238,7 +238,7 @@ public class GamePanel extends Panel {
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
 						+ fontHeight + 240);
 
-		strDisplay = "left pinkie on 'A' to fire missile";
+		strDisplay = "left pinkie on 'A' to fire shockwave missile";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
 						+ fontHeight + 280);

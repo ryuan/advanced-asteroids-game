@@ -63,6 +63,7 @@ public class Game implements Runnable, KeyListener {
 	private static final int SPAWN_NEW_BULLET_FLOATER = FRAMES_PER_SECOND * 20;
 	private static final int SPAWN_NEW_MISSILE_FLOATER = FRAMES_PER_SECOND * 10;
 	private static final int SPAWN_MINE = FRAMES_PER_SECOND * 20;
+	private static final int SPAWN_UFO = FRAMES_PER_SECOND * 30;
 
 
 
@@ -127,6 +128,7 @@ public class Game implements Runnable, KeyListener {
 			spawnNewBulletFloater();
 			spawnNewMissileFloater();
 			spawnMine();
+			spawnUfo();
 
 			// surround the sleep() in a try/catch block
 			// this simply controls delay time between
@@ -331,6 +333,14 @@ public class Game implements Runnable, KeyListener {
 		//appears more often as your level increses.
 		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_MINE - level * 7L) == 0) {
 			CommandCenter.getInstance().getOpsList().enqueue(new Mine(CommandCenter.getInstance().getFalcon()), CollisionOp.Operation.ADD);
+		}
+	}
+
+	private void spawnUfo() {
+
+		//appears more often as your level increses.
+		if ((System.currentTimeMillis() / ANI_DELAY) % (SPAWN_MINE - level * 8L) == 0) {
+			CommandCenter.getInstance().getOpsList().enqueue(new Ufo(CommandCenter.getInstance().getFalcon()), CollisionOp.Operation.ADD);
 		}
 	}
 

@@ -5,11 +5,11 @@ import edu.uchicago.gerber._08final.mvc.controller.Game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Mine extends Sprite {
+public class Ufo extends Sprite {
     private Falcon falcon;
-    private int currentMineNum;
+    private int currentUfoNum;
 
-    public Mine(Falcon falcon) {
+    public Ufo(Falcon falcon) {
         super();
 
         this.falcon = falcon;
@@ -17,13 +17,14 @@ public class Mine extends Sprite {
         setTeam(Team.FOE);
 
         setExpiry(250);
-        setRadius(5);
+        setRadius(25);
+        setSpin(somePosNegValue(10));
 
         setCenter(new Point(Game.R.nextInt(Game.DIM.width), Game.R.nextInt(Game.DIM.height)));
 
         setOrientation(Game.R.nextInt(360));
 
-        currentMineNum = 1;
+        currentUfoNum = 1;
     }
 
     @Override
@@ -39,19 +40,19 @@ public class Mine extends Sprite {
             int deltaY = falcon.getCenter().y - this.getCenter().y;
 
             double radians = Math.atan2(deltaY, deltaX);
-            setDeltaX(Math.cos(radians) * 4);
-            setDeltaY(Math.sin(radians) * 4);
+            setDeltaX(Math.cos(radians) * 7);
+            setDeltaY(Math.sin(radians) * 7);
         }
     }
 
     @Override
     public void draw(Graphics g) {
-        BufferedImage img = CommandCenter.getInstance().getMine(currentMineNum);
+        BufferedImage img = CommandCenter.getInstance().getUfo(currentUfoNum);
         drawImage(img, g);
 
-        currentMineNum += 1;
-        if (currentMineNum > 3) {
-            currentMineNum = 1;
+        currentUfoNum += 1;
+        if (currentUfoNum > 4) {
+            currentUfoNum = 1;
         }
     }
 }

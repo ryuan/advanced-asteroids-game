@@ -62,7 +62,6 @@ public class Missile extends Sprite {
         }
         if (getExpiry() == 0) {
             CommandCenter.getInstance().getOpsList().enqueue(new Shockwave(this), CollisionOp.Operation.ADD);
-            Sound.playSound("shockwave.wav");
         }
         expire();
     }

@@ -43,6 +43,10 @@ public class CommandCenter {
 	private BufferedImage mine1;
 	private BufferedImage mine2;
 	private BufferedImage mine3;
+	private BufferedImage ufo1;
+	private BufferedImage ufo2;
+	private BufferedImage ufo3;
+	private BufferedImage ufo4;
 
 	private List<Movable> movDebris = new LinkedList<>();
 	private List<Movable> movFriends = new LinkedList<>();
@@ -134,6 +138,11 @@ public class CommandCenter {
 		mine1 = loadGraphic("mine1.png");
 		mine2 = loadGraphic("mine2.png");
 		mine3 = loadGraphic("mine3.png");
+
+		ufo1 = loadGraphic("ufo_1.png");
+		ufo2 = loadGraphic("ufo_2.png");
+		ufo3 = loadGraphic("ufo_3.png");
+		ufo4 = loadGraphic("ufo_4.png");
 	}
 
 	private BufferedImage loadGraphic(String imgName) {
@@ -199,6 +208,21 @@ public class CommandCenter {
 				return mine2;
 			case 3:
 				return mine3;
+			default:
+				return null;
+		}
+	}
+
+	public BufferedImage getUfo(int ufoNum) {
+		switch (ufoNum) {
+			case 1:
+				return ufo1;
+			case 2:
+				return ufo2;
+			case 3:
+				return ufo3;
+			case 4:
+				return ufo4;
 			default:
 				return null;
 		}

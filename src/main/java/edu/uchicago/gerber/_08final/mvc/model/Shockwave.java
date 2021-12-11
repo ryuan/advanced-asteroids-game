@@ -1,6 +1,7 @@
 package edu.uchicago.gerber._08final.mvc.model;
 
 import edu.uchicago.gerber._08final.mvc.controller.Game;
+import edu.uchicago.gerber._08final.mvc.controller.Sound;
 
 import java.awt.*;
 
@@ -11,9 +12,10 @@ public class Shockwave extends MoveAdapter {
     private int mRadius;
 
     public Shockwave(Missile missile) {
-        mExpiry = 30;
+        mExpiry = 20;
         mRadius = 10;
         mCenter = missile.getCenter();
+        Sound.playSound("shockwave.wav");
     }
 
     @Override
@@ -41,7 +43,7 @@ public class Shockwave extends MoveAdapter {
         super.move();
 
         if (mExpiry > 0) {
-            mRadius += 15;
+            mRadius += 20;
             mExpiry--;
         } else {
             CommandCenter.getInstance().getOpsList().enqueue(this, CollisionOp.Operation.REMOVE);
