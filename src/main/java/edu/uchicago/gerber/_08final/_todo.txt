@@ -18,6 +18,7 @@ Enemy mines homing towards falcon with blinking animation
 Regenerate shield pickup floater with very gentle gravitation to falcon
 Add planetary outskirts background
 Add shockwave missiles that fire upon pressing A button
+Add shockwave explosion class that expand upon missile expiration OR collision
 Add missile pickup floaters to limit number of missile uses
 Add missile count display to top-right of panel
 

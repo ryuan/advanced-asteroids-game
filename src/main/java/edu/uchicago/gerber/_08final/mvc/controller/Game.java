@@ -165,6 +165,9 @@ public class Game implements Runnable, KeyListener {
 				if (pntFriendCenter.distance(pntFoeCenter) < (radFriend + radFoe)) {
 					//remove the friend (so long as he is not protected)
 					if (!movFriend.isProtected()) {
+						if (movFriend instanceof Missile) {
+							CommandCenter.getInstance().getOpsList().enqueue(new Shockwave((Missile) movFriend), CollisionOp.Operation.ADD);
+						}
 						CommandCenter.getInstance().getOpsList().enqueue(movFriend, CollisionOp.Operation.REMOVE);
 					}
 					//remove the foe

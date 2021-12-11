@@ -1,5 +1,7 @@
 package edu.uchicago.gerber._08final.mvc.model;
 
+import edu.uchicago.gerber._08final.mvc.controller.Sound;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -57,6 +59,10 @@ public class Missile extends Sprite {
         if (getExpiry() < MAX_EXPIRE -5){
             setDeltaX(getDeltaX() * 1.07);
             setDeltaY(getDeltaY() * 1.07);
+        }
+        if (getExpiry() == 0) {
+            CommandCenter.getInstance().getOpsList().enqueue(new Shockwave(this), CollisionOp.Operation.ADD);
+            Sound.playSound("shockwave.wav");
         }
         expire();
     }
