@@ -22,5 +22,4 @@ Add shockwave explosion class that expand upon missile expiration OR collision
 Add missile pickup floaters to limit number of missile uses
 Add missile count display to top-right of panel
 Added even stronger homing enemy type - UFOs (faster and larger than mines)
-
-Note: revert height dim back to 900 when done.
+Add ASCII title to game intro screen

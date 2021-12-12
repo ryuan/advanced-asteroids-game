@@ -1,10 +1,7 @@
 package edu.uchicago.gerber._08final.mvc.view;
 
 import edu.uchicago.gerber._08final.mvc.controller.Game;
-import edu.uchicago.gerber._08final.mvc.model.CommandCenter;
-import edu.uchicago.gerber._08final.mvc.model.Falcon;
-import edu.uchicago.gerber._08final.mvc.model.Missile;
-import edu.uchicago.gerber._08final.mvc.model.Movable;
+import edu.uchicago.gerber._08final.mvc.model.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -204,44 +201,54 @@ public class GamePanel extends Panel {
 	// This method draws some text to the middle of the screen before/after a game
 	private void displayTextOnScreen() {
 
-		strDisplay = "SAVE US";
-		grpOff.drawString(strDisplay,
-				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4);
+		String[] strTitleLines = ASCIITitle.makeASCIITitle();
+
+		int nTitleXCoord = 350;
+		int nTitleYCoord = 150;
+		int nTitleSpacing = 15;
+
+		grpOff.setFont(new Font("Monospaced", Font.PLAIN, 12));
+
+		grpOff.drawString(strTitleLines[0],nTitleXCoord,nTitleYCoord);
+		grpOff.drawString(strTitleLines[1],nTitleXCoord,nTitleYCoord+nTitleSpacing*1);
+		grpOff.drawString(strTitleLines[2],nTitleXCoord,nTitleYCoord+nTitleSpacing*2);
+		grpOff.drawString(strTitleLines[3],nTitleXCoord,nTitleYCoord+nTitleSpacing*3);
+		grpOff.drawString(strTitleLines[4],nTitleXCoord,nTitleYCoord+nTitleSpacing*4);
 
 		strDisplay = "use the arrow keys to turn and thrust";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 40);
+						+ fontHeight + 80);
 
 		strDisplay = "use the space bar to fire";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 80);
+						+ fontHeight + 120);
 
 		strDisplay = "'S' to Start";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 120);
+						+ fontHeight + 160);
 
 		strDisplay = "'P' to Pause";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 160);
+						+ fontHeight + 200);
 
 		strDisplay = "'Q' to Quit";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 200);
+						+ fontHeight + 240);
 
 		strDisplay = "left middle finger on 'D' for Hyperspace";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 240);
+						+ fontHeight + 280);
 
 		strDisplay = "left pinkie on 'A' to fire shockwave missile";
 		grpOff.drawString(strDisplay,
 				(Game.DIM.width - fmt.stringWidth(strDisplay)) / 2, Game.DIM.height / 4
-						+ fontHeight + 280);
+						+ fontHeight + 320);
 	}
 	
 
