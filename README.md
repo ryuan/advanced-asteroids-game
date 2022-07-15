@@ -7,7 +7,7 @@ https://user-images.githubusercontent.com/950298/179314208-71c4674e-7103-49b6-91
 
 ## Instructions
 
-Navigate to '''./final_game_mvc/controller/''' and build+run '''Game.java'''.
+Navigate to `./final_game_mvc/controller/` and build+run `Game.java`.
 
 ## Gameplay
 
