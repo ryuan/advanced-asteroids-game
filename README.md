@@ -1,11 +1,7 @@
 # Save Us
 Save Us is an advanced Asteroids-style game built entirely in Java as part of my final project submission for Java Programming.
 
-<img width="1095" alt="title_screen_snap" src="https://user-images.githubusercontent.com/950298/179314168-17340627-8fb3-4bbb-aef5-b1856ec537a1.png">
-
 ## Gameplay Video
-
-
 
 https://user-images.githubusercontent.com/950298/179314208-71c4674e-7103-49b6-91b2-adb26b0c61c1.mp4
 
